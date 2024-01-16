@@ -33,11 +33,20 @@ CREATE TABLE `place` (
   `country` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
 DROP TABLE IF EXISTS `old_language`;
 CREATE TABLE `old_language` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `old_language` varchar(255) NOT NULL,
   `period` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `pagination`;
+CREATE TABLE `pagination` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `controller_name` varchar(255) NOT NULL,
+  `results` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
