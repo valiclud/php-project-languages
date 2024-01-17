@@ -19,17 +19,25 @@ try {
     $languageTable = new DatabaseTable($pdo, 'old_language', 'id');
     $translatedTextTable = new DatabaseTable($pdo, 'translated_text', 'id');
 
-    $originalTextController = new OriginalTextController($originalTextTable, $translatedTextTable, $placesTable, $languageTable);
+    $route = $_GET['route'] ?? 'originaltext/home'; //if no route variable is set, use 'joke/home'
 
-    $action = $_GET['action'] ?? 'home';
+	if ($route == strtolower($route)) {
 
-    if ($action == strtolower($action)) {
-        $page = $originalTextController->$action();
-    } else {
+			if ($route === 'originaltext/list') {
+				include __DIR__ . '/../classes/controllers/OriginalTextController.php';
+				$controller =  new OriginalTextController($originalTextTable, $translatedTextTable, $placesTable, $languageTable);
+				$page = $controller->list();
+			}
+			else if ($route === 'originaltext/home') {
+				include __DIR__ . '/../classes/controllers/OriginalTextController.php';
+				$controller =  new OriginalTextController($originalTextTable, $translatedTextTable, $placesTable, $languageTable);
+				$page = $controller->home();
+			}else {
         http_response_code(301);
         header('location: index.php?action=' . strtolower($action));
         exit;
     }
+}
 
     $title = $page['title'];
     $output = $page['output'];

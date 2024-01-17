@@ -11,8 +11,8 @@
     </header>
     <ul>
       <li><a href="index.php">Home</a></li>
-      <li><a href="index.php?action=list">Original Text List</a></li>
-      <li><a href="index.php?action=save">Add a new Original Text</a></li>
+      <li><a href="index.php?route=originaltext/list">Original Text List</a></li>
+      <li><a href="index.php?route=originaltext/save">Add a new Original Text</a></li>
     </ul>
   </nav>
 
