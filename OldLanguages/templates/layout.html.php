@@ -21,7 +21,7 @@
   </main>
 
   <footer>
-  &copy; Ludvik Valicek 2023
+  &copy; Ludvik Valicek 2024
   </footer>
   </body>
 </html>

@@ -7,8 +7,7 @@
     <th>Place</th>
     <th>Old Language</th>
     <th>Date</th>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th>Actions</th>
   </tr>
 <?php foreach ($originalTexts as $originalText): ?>
   <tr>
@@ -22,12 +21,10 @@
   ."<td>".htmlspecialchars($originalText['old_languages'], ENT_QUOTES, 'UTF-8')."</td>" 
   ."<td>".htmlspecialchars(date_format($date,"d-m-Y"), ENT_QUOTES, 'UTF-8')."</td>" 
   ?>
-  <td><a href="index.php?action=edit&id=<?=$originalText['id']?>">Edit</a></td>
+  <td><a class="details" href="index.php?action=edit&id=<?=$originalText['id']?>">Edit</a>
+  </br>
+  <a class="details" href="index.php?action=delete&id=<?=$originalText['id']?>">Delete</a>
   <td>  
-  <form action="index.php?action=delete" method="post">
-    <input type="hidden" name="id" value="<?=$originalText['id']?>">
-    <input type="submit" value="Delete">
-  </form>
 </td>
 </tr>
 <?php endforeach; ?>

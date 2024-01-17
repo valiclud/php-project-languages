@@ -125,8 +125,25 @@ blockquote form {
   width: 10%;
 }
 
-table,
-th,
-td {
-  border: 1px solid;
+table{
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  width: 70%;
+}
+
+table tr {
+  border-bottom: 1px solid #c0c0c0;
+}
+
+table td {
+  text-align: center;
+}
+
+a.details{
+  color: #c0c0c0;
+}
+
+a.details:hover {
+  color: #ddd;
 }

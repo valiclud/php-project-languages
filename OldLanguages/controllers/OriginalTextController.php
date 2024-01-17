@@ -19,18 +19,12 @@ class OriginalTextController
 	{
 		$title = 'Internet Old Languages Database';
 
-		ob_start();
-
-		include  __DIR__ . '/../templates/home.html.php';
-
-		$output = ob_get_clean();
-
-		return ['output' => $output, 'title' => $title];
+		return ['template' => 'home.html.php', 'title' => $title];
 	}
 
 	public function delete()
 	{
-		$this->originalTextTable->delete('id', $_POST['id']);
+		$this->originalTextTable->delete('id', $_GET['id']);
 
 		header('location: index.php?action=list');
 	}
@@ -57,16 +51,12 @@ class OriginalTextController
 		}
 
 		$title = 'Original Text List';
-
 		$totalOriginalTexts = $this->originalTextTable->total();
 
-		ob_start();
-
-		include  __DIR__ . '/../templates/originaltexts.html.php';
-
-		$output = ob_get_clean();
-
-		return ['output' => $output, 'title' => $title];
+		return ['template'=>'originaltexts.html.php', 'title' => $title, 'variables' => [
+			'totalOriginalTexts' => $totalOriginalTexts,
+			'originalTexts' => $originalTexts
+		]];
 	}
 
 	public function edit()
@@ -86,11 +76,9 @@ class OriginalTextController
 				$originalText['id'] = $_GET['id'];
 				$originalText['old_language_id'] = $_POST['language'];
 				$originalText['place_id'] = $_POST['place'];
-				echo "<script>console.log('" . json_encode(print_r($_POST)) . "');</script>";
 				$this->originalTextTable->update($originalText);
+				header('location: index.php?action=list');
 			}
-
-			//header('location: index.php?action=list');
 
 		} else {
 			if (isset($_GET['id'])) {
@@ -105,13 +93,11 @@ class OriginalTextController
 
 			$title = 'Edit Original Text';
 
-			ob_start();
-
-			include  __DIR__ . '/../templates/editoriginaltext.html.php';
-
-			$output = ob_get_clean();
-
-			return ['output' => $output, 'title' => $title];
+			return ['template' => 'editoriginaltext.html.php',
+						 'title' => $title,
+						  'variables' => [
+								'originalText' => $originalText ?? null
+						  ]];
 		}
 	}
 
@@ -137,9 +123,7 @@ class OriginalTextController
 			$translatedText['insert_date'] = date_create()->format('Y-m-d');
 			$translatedText['revision'] = '0';
 			$this->translatedTextTable->save($translatedText);
-
-			//header('location: index.php?action=list');
-
+			header('location: index.php?action=list');
 		} else {
 			$languages = $this->languageTable->findAll();
 			$places = $this->placesTable->findAll();
@@ -148,13 +132,11 @@ class OriginalTextController
 
 			$title = 'Save New Original Text';
 
-			ob_start();
-
-			include  __DIR__ . '/../templates/editoriginaltext.html.php';
-
-			$output = ob_get_clean();
-
-			return ['output' => $output, 'title' => $title];
+			return ['template' => 'editoriginaltext.html.php',
+			'title' => $title,
+			 'variables' => [
+				   'originalText' => $originalText ?? null
+			 ]];
 		}
 	}
 }
