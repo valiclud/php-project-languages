@@ -4,7 +4,7 @@ class OldTextWebsite {
         return 'originaltext/home';
     }
 
-    public function getController(string $controllerName) {
+    public function getController(string $controllerName):? object {
         include __DIR__ . '/../includes/DatabaseConnection.php';
         include __DIR__ . '/../classes/DatabaseTable.php';
         include __DIR__ . '/../controllers/OriginalTextController.php';
@@ -14,13 +14,17 @@ class OldTextWebsite {
         $placesTable = new DatabaseTable($pdo, 'place', 'id');
         $languageTable = new DatabaseTable($pdo, 'old_language', 'id');
         $translatedTextTable = new DatabaseTable($pdo, 'translated_text', 'id');
+        $authorsTable = new DatabaseTable($pdo, 'author', 'id');
 
         if ($controllerName === 'originaltext') {
             $controller =  new OriginalTextController($originalTextTable, $translatedTextTable, $placesTable, $languageTable);
         }
-       // else if ($controllerName === 'author') {
-       //     $controller = new AuthorController($authorsTable);
-       // }
+       else if ($controllerName === 'author') {
+            $controller = new AuthorController($authorsTable);
+        }
+        else {
+            $controller = null;
+        }
 
         return $controller;
     }
