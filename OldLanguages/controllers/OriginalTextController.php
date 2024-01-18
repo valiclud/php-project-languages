@@ -19,14 +19,14 @@ class OriginalTextController
 	{
 		$title = 'Internet Old Languages Database';
 
-		return ['template' => 'home.html.php', 'title' => $title];
+		return ['template' => 'home.html.php', 'title' => $title, 'variables' => []];
 	}
 
-	public function delete()
+	public function delete($id = null)
 	{
-		$this->originalTextTable->delete('id', $_GET['id']);
+		$this->originalTextTable->delete('id', $id);
 
-		header('location: index.php?action=list');
+		header('location: /originaltext/list');
 	}
 
 	public function list()
@@ -59,8 +59,9 @@ class OriginalTextController
 		]];
 	}
 
-	public function edit()
+	public function edit($id = null)
 	{
+		
 		if (isset($_POST['originalText']) && $_POST['originalText'] != "") {
 			$originalText['text'] = $_POST['originalText'];
 			$originalText['author'] = 'aaaa';
@@ -72,17 +73,18 @@ class OriginalTextController
 			$originalText['place_id'] = $_POST['place'];
 			$originalText['old_language_id'] = $_POST['language'];
 
-			if (isset($_GET['id'])) {
-				$originalText['id'] = $_GET['id'];
+			if (isset($id)) {
+				$originalText['id'] = $id;
 				$originalText['old_language_id'] = $_POST['language'];
 				$originalText['place_id'] = $_POST['place'];
 				$this->originalTextTable->update($originalText);
-				header('location: index.php?action=list');
+				
+				header('location: /originaltext/list');
 			}
 
 		} else {
-			if (isset($_GET['id'])) {
-				$originalText = $this->originalTextTable->find('id', $_GET['id'])[0] ?? null;
+			if (isset($id)) {
+				$originalText = $this->originalTextTable->find('id', $id)[0] ?? null;
 				$languages = $this->languageTable->findAll();
 				$places = $this->placesTable->findAll();
 				$originalText['languages'] = $languages;
@@ -123,7 +125,7 @@ class OriginalTextController
 			$translatedText['insert_date'] = date_create()->format('Y-m-d');
 			$translatedText['revision'] = '0';
 			$this->translatedTextTable->save($translatedText);
-			header('location: index.php?action=list');
+			header('location: /originaltext/list');
 		} else {
 			$languages = $this->languageTable->findAll();
 			$places = $this->placesTable->findAll();

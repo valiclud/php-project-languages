@@ -21,11 +21,12 @@
   ."<td>".htmlspecialchars($originalText['old_languages'], ENT_QUOTES, 'UTF-8')."</td>" 
   ."<td>".htmlspecialchars(date_format($date,"d-m-Y"), ENT_QUOTES, 'UTF-8')."</td>" 
   ?>
-  <td><a class="details" href="index.php?route=originaltext/edit&id=<?=$originalText['id']?>">Edit</a>
-  </br>
-  <a class="details" href="index.php?route=originaltext/delete&id=<?=$originalText['id']?>">Delete</a>
+
+  <td>
+  <a class="details" href="/originaltext/edit/<?=$originalText['id']?>">Edit</a>
+  <br/>
+  <a class="details" href="/originaltext/delete/<?=$originalText['id']?>">Delete</a>
   <td>  
-</td>
-</tr>
+  </tr>
 <?php endforeach; ?>
 </table>

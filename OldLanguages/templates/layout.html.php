@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="oldlanguages.css">
+    <link rel="stylesheet" href="/styles/oldlanguages.css">
     <title><?=$title?></title>
   </head>
   <body>
@@ -10,9 +10,9 @@
     <header>
     </header>
     <ul>
-      <li><a href="index.php">Home</a></li>
-      <li><a href="index.php?route=originaltext/list">Original Text List</a></li>
-      <li><a href="index.php?route=originaltext/save">Add a new Original Text</a></li>
+      <li><a href="/originaltext">Home</a></li>
+      <li><a href="/originaltext/list">Original Text List</a></li>
+      <li><a href="/originaltext/save">Add a new Original Text</a></li>
     </ul>
   </nav>
 
