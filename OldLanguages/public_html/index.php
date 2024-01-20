@@ -1,6 +1,5 @@
 <?php
-include_once '../classes/EntryPoint.php';
-include_once '../classes/OldTextWebsite.php';
+include __DIR__ . '/../includes/autoload.php';
 
 $uri = strtok(ltrim($_SERVER['REQUEST_URI'], '/'), '?');
 $oldTextWebsite = new OldTextWebsite();
