@@ -1,4 +1,6 @@
 <?php
+
+namespace classes;
 class EntryPoint {
     public function __construct(private $website) {
     }
@@ -34,7 +36,7 @@ class EntryPoint {
                 $output = 'Sorry, the page you are looking for could not be found.';
             }
             
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $title = 'An error has occurred';
 
             $output = 'Database error: ' . $e->getMessage() . ' in ' .

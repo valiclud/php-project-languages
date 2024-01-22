@@ -1,7 +1,9 @@
 <?php 
 
+namespace controllers;
+
 class LoginController {
-    public function __construct(private Authentication $authentication) {
+    public function __construct(private \classes\Authentication $authentication) {
 
     }
 

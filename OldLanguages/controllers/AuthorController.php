@@ -1,6 +1,8 @@
 <?php
+
+namespace controllers;
 class AuthorController {
-	public function __construct(private DatabaseTable $authorsTable) {
+	public function __construct(private \classes\DatabaseTable $authorsTable) {
     }
 
     public function registrationForm() {
