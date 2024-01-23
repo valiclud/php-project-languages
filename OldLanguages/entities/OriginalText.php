@@ -25,6 +25,10 @@ class OriginalText
 
     public $old_language_id;
 
+    private ?object $place;
+
+    private ?object $oldLanguage;
+
     public function __construct(
         private ?\classes\DatabaseTable $placesTable,
         private ?\classes\DatabaseTable $oldLanguagesTable
@@ -33,7 +37,10 @@ class OriginalText
 
     public function getPlace()
     {
-        return $this->placesTable->find('id', $this->place_id)[0];
+        if (empty($this->place)) {
+            $this->place = $this->placesTable->find('id', $this->place_id)[0];
+        }
+        return $this->place;
     }
 
     public function getAllPlaces()
@@ -43,7 +50,10 @@ class OriginalText
 
     public function getOldLanguage()
     {
-        return $this->oldLanguagesTable->find('id', $this->old_language_id)[0];
+        if (empty($this->oldLanguage)) {
+            $this->oldLanguage = $this->oldLanguagesTable->find('id', $this->old_language_id)[0];
+        }
+        return $this->oldLanguage;
     }
 
     public function getAllOldLanguages()
