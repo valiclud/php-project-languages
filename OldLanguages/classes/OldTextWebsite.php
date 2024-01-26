@@ -37,6 +37,9 @@ public function __construct() {
         if ($controllerName === 'originaltext') {
             $controller =  new \controllers\OriginalTextController($this->originalTextTable, $this->translatedTextTable, $this->placesTable, $this->languageTable, $this->authentication);
         }
+        else if ($controllerName === 'translatedtext') {
+            $controller = new \controllers\TranslatedTextController($this->translatedTextTable, $this->originalTextTable, $this->authentication);
+        }
        else if ($controllerName === 'author') {
             $controller = new \controllers\AuthorController($this->authorsTable);
         }

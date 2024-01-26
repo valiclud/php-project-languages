@@ -18,21 +18,25 @@ class TranslatedText
 
     public $revision;
 
-    public $originalTextId;
+    public $original_text_id;
+
+    private ?object $originalText;
 
     public function __construct(
-        //private DatabaseTable $originalTextsTable,
-        private ?\classes\DatabaseTable $translatedTextsTable
+        private ?\classes\DatabaseTable $originalTextsTable
     ) {
     }
 
-    public function getOriginalTexts()
+    public function getOriginalText()
     {
-        return $this->translatedTextsTable->find('original_text_id', $this->originalTextId);
+        if (empty($this->originalText)) {
+            $this->originalText = $this->originalTextsTable->find('id', $this->original_text_id)[0];
+        }
+        return $this->originalText;
     }
 
-    public function getTranslatedText()
+    public function getAllOriginalTexts()
     {
-        return $this->translatedTextsTable->find('id', $this->id)[0];
+        return $this->originalTextsTable->findAll();
     }
 }
