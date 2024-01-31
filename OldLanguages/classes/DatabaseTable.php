@@ -18,8 +18,18 @@ class DatabaseTable {
         return $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->className, $this->constructorArgs);
     }
 
-    public function findAll() {
-        $stmt = $this->pdo->prepare('SELECT * FROM ' .$this->table);
+    public function findAll(int $limit = 0, int $offset = 0) {
+        $query = 'SELECT * FROM ' .$this->table .' ORDER BY ID ';
+
+        if ($limit > 0) {
+            $query .= ' LIMIT ' . $limit;
+        }
+
+        if ($offset > 0) {
+            $query .= ' OFFSET ' . $offset;
+        }
+
+        $stmt = $this->pdo->prepare($query);
         $stmt->execute();
         return $stmt->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_PROPS_LATE, $this->className, $this->constructorArgs);
     }

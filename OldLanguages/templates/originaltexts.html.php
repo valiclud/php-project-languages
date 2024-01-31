@@ -1,4 +1,4 @@
-<p><?=$totalOriginalTexts?> originals text have been submitted to the Internet Old Text Database.</p>
+<p><?=$totalOriginalTexts?> original texts have been submitted to the Internet Old Text Database.</p>
 <table>
 <tr>
     <th>Title</th>
@@ -19,7 +19,6 @@
   ."<td>".htmlspecialchars($originalText->getOldLanguage()->language, ENT_QUOTES, 'UTF-8')."</td>" 
   ."<td>".htmlspecialchars(date_format($date,"d-m-Y"), ENT_QUOTES, 'UTF-8')."</td>" 
   ?>
-
   <td>
   <a class="details" href="/originaltext/edit/<?=$originalText->id?>">Edit</a>
   <br/>
@@ -28,3 +27,15 @@
   </tr>
 <?php endforeach; ?>
 </table>
+Select page:
+
+<?php
+for ($i = 1; $i <= $numPages; $i++):
+?>
+  <a href="/originaltext/list/<?=$i?>"><?=$i?></a>
+<?php endfor; ?>
+
+</div>
+
+
+</div>

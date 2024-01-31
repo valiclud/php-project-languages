@@ -9,6 +9,7 @@ class TranslatedTextController
 	public function __construct(
 		private \classes\DatabaseTable $translatedTextTable,
         private \classes\DatabaseTable $originalTextTable,
+		private \classes\DatabaseTable $paginationTable,
 		private \classes\Authentication $authentication
 	) {
 	}
@@ -27,15 +28,18 @@ class TranslatedTextController
 		header('location: /translatedtext/list');
 	}
 
-	public function list()
+	public function list(?int $page = 0)
 	{
-		$translatedTexts = $this->translatedTextTable->findAll();
+		$pagination = $this->paginationTable->find('controller_name', 'translatedtextController')[0];
+		$limit = $pagination->results;
+		$translatedTexts = $this->translatedTextTable->findAll($limit, ($page-1)*$limit);
 		$title = 'Translated Text List';
 		$totalTranslatedTexts = $this->translatedTextTable->total();
 
 		return ['template' => 'translatedtexts.html.php', 'title' => $title, 'variables' => [
 			'totalTranslatedTexts' => $totalTranslatedTexts,
-			'translatedTexts' => $translatedTexts
+			'translatedTexts' => $translatedTexts,
+			'numPages' => ceil($totalTranslatedTexts / $limit)
 		]];
 	}
 

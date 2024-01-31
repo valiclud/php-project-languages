@@ -11,6 +11,7 @@ class OriginalTextController
 		private \classes\DatabaseTable $translatedTextTable,
 		private \classes\DatabaseTable $placesTable,
 		private \classes\DatabaseTable $languageTable,
+		private \classes\DatabaseTable $paginationTable,
 		private \classes\Authentication $authentication
 	) {
 	}
@@ -29,16 +30,18 @@ class OriginalTextController
 		header('location: /originaltext/list');
 	}
 
-	public function list()
+	public function list(?int $page = 0)
 	{
-		$originalTexts = $this->originalTextTable->findAll();
-		//echo "<script>console.log('" . json_encode($result) . "');</script>";
+		$pagination = $this->paginationTable->find('controller_name', 'originaltextController')[0];
+		$limit = $pagination->results;
+		$originalTexts = $this->originalTextTable->findAll($limit, ($page-1)*$limit);
 		$title = 'Original Text List';
 		$totalOriginalTexts = $this->originalTextTable->total();
 
 		return ['template' => 'originaltexts.html.php', 'title' => $title, 'variables' => [
 			'totalOriginalTexts' => $totalOriginalTexts,
-			'originalTexts' => $originalTexts
+			'originalTexts' => $originalTexts,
+			'numPages' => ceil($totalOriginalTexts / $limit)
 		]];
 	}
 

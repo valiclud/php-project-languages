@@ -30,3 +30,15 @@
   </tr>
 <?php endforeach; ?>
 </table>
+Select page:
+
+<?php
+for ($i = 1; $i <= $numPages; $i++):
+?>
+  <a href="/translatedtext/list/<?=$i?>"><?=$i?></a>
+<?php endfor; ?>
+
+</div>
+
+
+</div>

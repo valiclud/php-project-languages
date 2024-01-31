@@ -13,6 +13,7 @@
       <li><a href="/originaltext">Home</a></li>
       <li><a href="/originaltext/list">Original Text List</a></li>
       <li><a href="/translatedtext/list">Translated Text List</a></li>
+      <li><a href="/pagination/list">Pagination Setting</a></li>
       <?php if ($loggedIn): ?>
       <li><a href="/translatedtext/save">Add a new Translated Text</a></li>
       <li><a href="/originaltext/save">Add a new Original Text</a></li>
