@@ -1,3 +1,5 @@
+
+SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `original_text`;
 CREATE TABLE `original_text` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -8,8 +10,8 @@ CREATE TABLE `original_text` (
   `century` int NOT NULL,
   `insert_date` date NOT NULL,
   `hits` int NOT NULL,
-  `place_id` int(11) NOT NULL,
-  `old_language_id` int(11) NOT NULL,
+  `place_id` int(11),
+  `old_language_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -22,7 +24,7 @@ CREATE TABLE `translated_text` (
   `language` varchar(255),
   `insert_date` date,
   `revision` int,
-  `original_text_id` int(11) NOT NULL,
+  `original_text_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -37,7 +39,7 @@ CREATE TABLE `place` (
 DROP TABLE IF EXISTS `old_language`;
 CREATE TABLE `old_language` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `old_language` varchar(255) NOT NULL,
+  `language` varchar(255) NOT NULL,
   `period` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -59,10 +61,9 @@ CREATE TABLE `author` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 alter table `translated_text`
-    add foreign key (original_text_id) references original_text(id);
+    add foreign key (original_text_id) references original_text(id) on delete set null;
 alter table `original_text`
-    add foreign key (old_language_id) references old_language(id);
+    add foreign key (old_language_id) references old_language(id) on delete set null;
 alter table `original_text`
-    add foreign key (place_id) references place(id);
-
-
+    add foreign key (place_id) references place(id) on delete set null;
+SET FOREIGN_KEY_CHECKS=1;
