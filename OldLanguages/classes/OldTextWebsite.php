@@ -2,7 +2,7 @@
 
 namespace classes;
 
-class OldTextWebsite
+class OldTextWebsite implements \classes\Website
 {
 
     private ?\classes\DatabaseTable $originalTextTable;
@@ -38,7 +38,7 @@ class OldTextWebsite
         ];
     }
 
-    public function getDefaultRoute()
+    public function getDefaultRoute() : string
     {
         return 'originaltext/home';
     }

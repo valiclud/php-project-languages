@@ -2,7 +2,7 @@
 
 namespace classes;
 class EntryPoint {
-    public function __construct(private $website) {
+    public function __construct(private \classes\Website $website) {
     }
 
     public function run($uri, $method) {
