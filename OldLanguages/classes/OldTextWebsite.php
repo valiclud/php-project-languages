@@ -58,6 +58,9 @@ class OldTextWebsite implements \classes\Website
             $controller = new \controllers\LoginController($this->authentication);
         } else if ($controllerName == 'pagination') {
             $controller = new \controllers\PaginationController($this->paginationTable);
+        } else if ($controllerName == 'api') {
+            $controller = new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
+            $this->authentication);
         } else {
             $controller = null;
         }
