@@ -129,10 +129,11 @@ table{
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
-  width: 70%;
+  width: 80%;
 }
 
 table tr {
+  max-height: 80px;
   border-bottom: 1px solid #c0c0c0;
 }
 
@@ -146,4 +147,20 @@ a.details{
 
 a.details:hover {
   color: #ddd;
+}
+
+.td img {
+  width: 20px;
+  height: 30px;
+  object-fit: cover;
+}
+
+img:hover {
+  -webkit-transform: scale(10,10);
+}
+
+.autoResizeImage {
+  text-align: center;
+  width: 50%;
+  height: auto;
 }

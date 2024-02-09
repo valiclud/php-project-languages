@@ -13,7 +13,7 @@ class OriginalText
 
     public $text;
 
-    public $textImg;
+    public $text_img;
 
     public $century;
 

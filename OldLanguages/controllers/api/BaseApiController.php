@@ -49,14 +49,14 @@ class BaseApiController
      * @return array
 
      */
-
+/*
     protected function getQueryStringParams()
 
     {
 
         return parse_str($_SERVER['QUERY_STRING'], $query);
     }
-
+*/
     /**
 
      * Send API output.

@@ -1,8 +1,10 @@
-<form action="" method="post">
+<form action="" method="post" enctype="multipart/form-data">
   <label for="originaltext">Type author of original text:</label>
   <input id="originaltext" name="originaltext[author]"><?= $originalText->author ?? '' ?></input>
   <label for="originaltext">Type title of original text:</label>
   <input id="originaltext" name="originaltext[title]"><?= $originalText->title ?? '' ?></input>
+  <label for="originaltext">Select image to upload:</label>
+  <input type="file" name="myfile">
   <label for="originaltext">Century:</label>
   <input id="originaltext" name="originaltext[title]"><?= $originalText->title ?? '' ?></input>
   <label for="originaltext">Type your original text:</label>

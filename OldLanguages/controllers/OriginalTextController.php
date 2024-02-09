@@ -95,6 +95,8 @@ class OriginalTextController
 			$originaltext['insert_date'] = date_create()->format('Y-m-d');
 			$originaltext['hits'] = 1;
 
+			$originaltext['text_img'] = file_get_contents($_FILES['myfile']['tmp_name']);
+
 			$this->originalTextTable->save($originaltext);
 
 			header('location: /originaltext/list');
