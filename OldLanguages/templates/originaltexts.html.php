@@ -17,11 +17,11 @@
   ."<td>".htmlspecialchars($originalText->title, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>".htmlspecialchars($originalText->text, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>"
-  .'<img class="autoResizeImage" src="data:image/jpeg;base64,'.base64_encode($originalText->text_img) .'" onclick="enlargeImg()" id="img1"/>'
+  .'<img class="autoResizeImage" src="data:image/jpeg;base64,'.base64_encode($originalText->text_img).'"/>'
   ."</td>"
   ."<td>".htmlspecialchars($originalText->getPlace()->place, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>".htmlspecialchars($originalText->getOldLanguage()->language, ENT_QUOTES, 'UTF-8')."</td>" 
-  ."<td>".htmlspecialchars(date_format($date,"d-m-Y"), ENT_QUOTES, 'UTF-8')."</td>"
+  ."<td>".htmlspecialchars(date_format($date,"d-m-Y"), ENT_QUOTES, 'UTF-8')."</td>";
   ?>
   <td>
   <a class="details" href="/originaltext/edit/<?=$originalText->id?>">Edit</a>
