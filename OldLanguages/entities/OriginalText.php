@@ -25,14 +25,63 @@ class OriginalText
 
     public $old_language_id;
 
-    private ?object $place;
+    private ?object $place = null;
 
-    private ?object $oldLanguage;
+    private ?object $oldLanguage = null;
+
+    public static function default(): self
+    {
+        return self::withAttributes("", "", "", null, "", date_create(), 0, null, null);
+    }
+
+    public static function from(
+        String $author,
+        String $title,
+        String $text,
+        $text_img,
+        String $century,
+        \DateTime $insert_date,
+        int $hits,
+        ?Place $place,
+        ?OldLanguage $oldLanguage
+    ) {
+        return self::withAttributes($author, $title, $text, $text_img, $century, $insert_date, $hits, $place, $oldLanguage);
+    }
+
+    public static function withAttributes(
+        String $author,
+        String $title,
+        String $text,
+        $text_img,
+        String $century,
+        \DateTime $insert_date,
+        int $hits,
+        ?\classes\DatabaseTable $placesTable,
+        ?\classes\DatabaseTable $oldLanguagesTable
+    ): self {
+        $instance = new self($placesTable, $oldLanguagesTable);
+        $instance->author = $author;
+        $instance->title = $title;
+        $instance->text = $text;
+        $instance->text_img = $text_img;
+        $instance->century = $century;
+        $instance->insert_date = $insert_date;
+        $instance->hits = $hits;
+        $instance->placesTable = $placesTable;
+        $instance->oldLanguagesTable = $oldLanguagesTable;
+
+        return $instance;
+    }
 
     public function __construct(
         private ?\classes\DatabaseTable $placesTable,
         private ?\classes\DatabaseTable $oldLanguagesTable
     ) {
+    }
+
+    public function setAuthor(String $author): void
+    {
+        $this->author = $author;
     }
 
     public function getPlace()
@@ -60,5 +109,4 @@ class OriginalText
     {
         return $this->oldLanguagesTable->findAll();
     }
-    
 }
