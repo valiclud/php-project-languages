@@ -7,10 +7,10 @@ use entities\OriginalText;
 class OriginalTextController
 {
 	public function __construct(
-		private \classes\DatabaseTable $originalTextTable,
-		private \classes\DatabaseTable $translatedTextTable,
 		private \classes\DatabaseTable $placesTable,
 		private \classes\DatabaseTable $languageTable,
+		private \classes\DatabaseTable $originalTextTable,
+		private \classes\DatabaseTable $translatedTextTable,
 		private \classes\DatabaseTable $paginationTable,
 		private \classes\Authentication $authentication
 	) {

@@ -29,9 +29,21 @@ class OriginalText
 
     private ?object $oldLanguage = null;
 
-    public static function default(): self
+    public static function default($placesTable, $oldLanguagesTable): self
     {
-        return self::withAttributes("", "", "", null, "", date_create(), 0, null, null);
+        return self::from(
+            "",
+            "",
+            "",
+            null,
+            "",
+            date_create(),
+            0,
+            Place::from(0, "", ""),
+            OldLanguage::from(0, "", ""),
+            $placesTable,
+            $oldLanguagesTable
+        );
     }
 
     public static function from(
@@ -43,22 +55,10 @@ class OriginalText
         \DateTime $insert_date,
         int $hits,
         ?Place $place,
-        ?OldLanguage $oldLanguage
+        ?OldLanguage $oldLanguage,
+        \classes\DatabaseTable $placesTable,
+        \classes\DatabaseTable $oldLanguagesTable
     ) {
-        return self::withAttributes($author, $title, $text, $text_img, $century, $insert_date, $hits, $place, $oldLanguage);
-    }
-
-    public static function withAttributes(
-        String $author,
-        String $title,
-        String $text,
-        $text_img,
-        String $century,
-        \DateTime $insert_date,
-        int $hits,
-        ?\classes\DatabaseTable $placesTable,
-        ?\classes\DatabaseTable $oldLanguagesTable
-    ): self {
         $instance = new self($placesTable, $oldLanguagesTable);
         $instance->author = $author;
         $instance->title = $title;
@@ -67,18 +67,15 @@ class OriginalText
         $instance->century = $century;
         $instance->insert_date = $insert_date;
         $instance->hits = $hits;
-        $instance->placesTable = $placesTable;
-        $instance->oldLanguagesTable = $oldLanguagesTable;
+        $instance->place = $place;
+        $instance->oldLanguage = $oldLanguage;
 
         return $instance;
     }
 
-    public function __construct(
-        private ?\classes\DatabaseTable $placesTable,
-        private ?\classes\DatabaseTable $oldLanguagesTable
-    ) {
+    public function __construct(private \classes\DatabaseTable $placesTable, private \classes\DatabaseTable $oldLanguagesTable)
+    {
     }
-
     public function setAuthor(String $author): void
     {
         $this->author = $author;

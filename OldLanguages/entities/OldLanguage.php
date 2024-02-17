@@ -11,20 +11,22 @@ class OldLanguage
 
     public $period;
 
-    public function __construct(
-        //private DatabaseTable $originalTextsTable,
-        //private ?\classes\DatabaseTable $oldLanguagesTable
-    ) {
-    }
-/**
-    public function getOriginalTexts()
+    public static function default(): self
     {
-        return $this->originalTextsTable->find('old_language_id', $this->id);
+        return self::from(0, "", "");
     }
 
-    public function getOldLanguageById()
+    public static function from(int $id, String $language, String $period): self
     {
-        return $this->oldLanguagesTable->find('id', $this->id)[0];
+        $instance = new self();
+        $instance->id        = $id;
+        $instance->language     = $language;
+        $instance->period   = $period;
+
+        return $instance;
     }
-    */
+
+    private function __construct()
+    {
+    }
 }

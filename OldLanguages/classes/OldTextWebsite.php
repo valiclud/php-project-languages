@@ -47,8 +47,8 @@ class OldTextWebsite implements \classes\Website
     {
 
         if ($controllerName === 'originaltext') {
-            $controller =  new \controllers\OriginalTextController($this->originalTextTable, $this->translatedTextTable, $this->placesTable,
-             $this->languageTable, $this->paginationTable, $this->authentication);
+            $controller =  new \controllers\OriginalTextController($this->placesTable, $this->languageTable, $this->originalTextTable, $this->translatedTextTable,
+             $this->paginationTable, $this->authentication);
         } else if ($controllerName === 'translatedtext') {
             $controller = new \controllers\TranslatedTextController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
              $this->authentication);

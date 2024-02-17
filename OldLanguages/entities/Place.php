@@ -2,6 +2,7 @@
 
 
 namespace entities;
+
 class Place
 {
 
@@ -11,20 +12,24 @@ class Place
 
     public $country;
 
-    public function __construct(
-        //private ?\classes\DatabaseTable $originalTextsTable,
-        //private ?\classes\DatabaseTable $placesTable
-    ) {
+    public static function default(): self
+    {
+        return self::from(0, "", "");
     }
 
-/*    public function getOriginalTexts()
+    public static function from(int $id, String $place, String $country): self
     {
-        return $this->originalTextsTable->find('place_id', $this->id);
+        $instance = new self();
+        $instance->id        = $id;
+        $instance->place     = $place;
+        $instance->country   = $country;
+
+        return $instance;
     }
 
-    public function getPlaceById()
+    private function __construct()
     {
-        return $this->placesTable->find('id', $this->id)[0];
+        
     }
-    */
+
 }

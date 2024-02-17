@@ -6,16 +6,31 @@ use entities\OriginalText;
 
 final class OriginalTextTest extends TestCase
 {
+    private DatabaseTable $originalTextTable;
+    private DatabaseTable $placesTable;
+    private DatabaseTable $languageTable;
+    private DatabaseTable $paginationTable;
     private OriginalText $originalText;
 
     protected function setUp(): void
     {
-        $this->originalText = OriginalText::default();
+        try {
+            $pdo = new \PDO('mysql:host=localhost:3306;dbname=old_languages;charset=utf8mb4', 'root', 'lukasa');
+            $this->placesTable = new DatabaseTable($pdo, 'place', 'id', '\entities\Place');
+            $this->languageTable = new DatabaseTable($pdo, 'old_language', 'id', '\entities\OldLanguage');
+            $this->originalTextTable = new DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable]);
+            $this->paginationTable = new DatabaseTable($pdo, 'pagination', 'id', '\entities\Pagination');
+        } catch (\PDOException $e) {
+            echo "<script>console.log('$e');</script>";
+            echo "$e";
+            //throw new \PDOException($e);
+        }
+ 
+        $this->originalText = OriginalText::default($this->placesTable, $this->languageTable);
     }
 
     public function test_default_original_text(): void
     {
-        //$this->assertTrue($this->material->color()->equalTo(Color::from(1, 1, 1)));
         $this->assertSame("", $this->originalText->author);
         $this->assertSame("", $this->originalText->title);
         $this->assertSame("", $this->originalText->text);
@@ -24,6 +39,21 @@ final class OriginalTextTest extends TestCase
         $this->assertSame(date_create()->format('Y-m-d'), $this->originalText->insert_date->format('Y-m-d'));
         $this->assertSame(0, $this->originalText->hits);
     }
+
+    public function test_default_place(): void
+    {
+        $this->assertSame(0, $this->originalText->getPlace()->id);
+        $this->assertSame("", $this->originalText->getPlace()->place);
+        $this->assertSame("", $this->originalText->getPlace()->country);
+    }
+
+    public function test_default_oldlanguage(): void
+    {
+        $this->assertSame(0, $this->originalText->getOldLanguage()->id);
+        $this->assertSame("", $this->originalText->getOldLanguage()->language);
+        $this->assertSame("", $this->originalText->getOldLanguage()->period);
+    }
+
 
     public function test_author_can_be_changed(): void
     {
