@@ -1,17 +1,24 @@
 <?php
 
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\Small;
+use PHPUnit\Framework\Attributes\TestDox;
+use PHPUnit\Framework\Attributes\UsesClass;
 use PHPUnit\Framework\TestCase;
 use classes\DatabaseTable;
 use entities\OriginalText;
 
+#[CoversClass(OriginalText::class)]
+#[UsesClass(DatabaseTable::class)]
+#[Small]
 final class OriginalTextTest extends TestCase
 {
     private DatabaseTable $originalTextTable;
     private DatabaseTable $placesTable;
     private DatabaseTable $languageTable;
-    private DatabaseTable $paginationTable;
     private OriginalText $originalText;
 
+    #[TestDox('Set up database connection and initialize relevant DatabaseTables classes')]
     protected function setUp(): void
     {
         try {
@@ -19,13 +26,12 @@ final class OriginalTextTest extends TestCase
             $this->placesTable = new DatabaseTable($pdo, 'place', 'id', '\entities\Place');
             $this->languageTable = new DatabaseTable($pdo, 'old_language', 'id', '\entities\OldLanguage');
             $this->originalTextTable = new DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable]);
-            $this->paginationTable = new DatabaseTable($pdo, 'pagination', 'id', '\entities\Pagination');
         } catch (\PDOException $e) {
             echo "<script>console.log('$e');</script>";
             echo "$e";
-            //throw new \PDOException($e);
+            throw new \PDOException($e);
         }
- 
+
         $this->originalText = OriginalText::default($this->placesTable, $this->languageTable);
     }
 
@@ -54,7 +60,6 @@ final class OriginalTextTest extends TestCase
         $this->assertSame("", $this->originalText->getOldLanguage()->period);
     }
 
-
     public function test_author_can_be_changed(): void
     {
         $author = "Cicero";
@@ -62,5 +67,16 @@ final class OriginalTextTest extends TestCase
         $this->originalText->setAuthor($author);
 
         $this->assertSame($author, $this->originalText->author);
+    }
+
+    protected function tearDown(): void
+    {
+        try {
+            $pdo = null;
+        } catch (\PDOException $e) {
+            echo "<script>console.log('$e');</script>";
+            echo "$e";
+            throw new \PDOException($e);
+        }
     }
 }
