@@ -19,18 +19,20 @@ class TranslatedTextApiController extends BaseApiController
 	{
 		$this->translatedTextTable->delete('id', $id);
 
-		header('location: /translatedtext/list');
+		return null;
 	}
 
-	public function list(?int $page = 0)
+	public function list(?int $page = 1)
 	{
-		$pagination = $this->paginationTable->find('controller_name', 'translatedtextController')[0];
+		$pagination = $this->paginationTable->find('controller_name', 'apitranslatedtextController')[0];
 		$limit = $pagination->results;
-		$translatedTexts = $this->translatedTextTable->findAll($limit, ($page - 1) * $limit);
-		$title = 'Translated Text List';
+		$offset = ($page - 1) * $limit;
+		$translatedTexts = $this->translatedTextTable->findAll($limit, $offset);
 		$totalTranslatedTexts = $this->translatedTextTable->total();
-
-		$responseData = json_encode($translatedTexts);
+		$totalPages = ceil($totalTranslatedTexts / $pagination->results);
+		$data = array("total" => $totalTranslatedTexts, "total_pages" => $totalPages, "per_page" => $pagination->results, 
+			"page_number" => $page, "data" => $translatedTexts);
+		$responseData = json_encode($data);
 		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK"));
 
 		return null;
@@ -44,46 +46,11 @@ class TranslatedTextApiController extends BaseApiController
 			$translatedText = new TranslatedText($this->originalTextTable);
 		}
 
-		$responseData = json_encode($translatedText);
+		$data = array("data" => $translatedText);
+		$responseData = json_encode($data);
 		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK"));
-
-		$title = 'Edit Translated Text';
 
 		return null;
 	}
-	public function save()
-	{
-		$title = 'Save New Translated Text';
 
-		return [
-			'template' => 'savetranslatedtext.html.php',
-			'title' => $title,
-			'variables' => [
-				'translatedtext' => new TranslatedText($this->originalTextTable)
-			]
-		];
-	}
-
-	public function saveSubmit()
-	{
-		$translatedtext = $_POST['translatedtext'];
-		if ((isset($_POST['translatedtext']) && $_POST['translatedtext'] != "")) {
-			$translatedtext['insert_date'] = date_create()->format('Y-m-d');
-			$translatedtext['revision'] = 0;
-
-			$this->translatedTextTable->save($translatedtext);
-
-			header('location: /translatedtext/list');
-		} else {
-			$title = 'Save New Translated Text';
-
-			return [
-				'template' => 'savetranslatedtext.html.php',
-				'title' => $title,
-				'variables' => [
-					'originalText' => new TranslatedText($this->originalTextTable)
-				]
-			];
-		}
-	}
 }
