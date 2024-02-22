@@ -36,9 +36,7 @@ final class OriginalTextDBTest extends TestCase
         }
     }
 
-
-
-    public function testInsert(): void
+    public function test_insert_original_text_to_db(): void
     {
         $originalText['author'] = "Unknown";
         $originalText['title'] = "Battle xxxl";

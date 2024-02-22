@@ -27,7 +27,7 @@ final class OriginalTextTest extends TestCase
             $this->languageTable = new DatabaseTable($pdo, 'old_language', 'id', '\entities\OldLanguage');
             $this->originalTextTable = new DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable]);
         } catch (\PDOException $e) {
-            echo "<script>console.log('$e');</script>";
+            error_log($e->getMessage());
             echo "$e";
             throw new \PDOException($e);
         }
@@ -74,7 +74,7 @@ final class OriginalTextTest extends TestCase
         try {
             $pdo = null;
         } catch (\PDOException $e) {
-            echo "<script>console.log('$e');</script>";
+            error_log($e->getMessage());
             echo "$e";
             throw new \PDOException($e);
         }
