@@ -3,6 +3,7 @@
 namespace controllers\api;
 
 use entities\TranslatedText;
+use entities\Pagination;
 use controllers\api\BaseApiController;
 
 class TranslatedTextApiController extends BaseApiController
@@ -25,6 +26,13 @@ class TranslatedTextApiController extends BaseApiController
 	public function list(?int $page = 1)
 	{
 		$pagination = $this->paginationTable->find('controller_name', 'apitranslatedtextController')[0];
+		if ($pagination == null) {
+			$message = 'Record column controller_name -> "apitranslatedtextController" is not stored in database table pagination
+			default value pagination=5 is to be set.';
+			$pagination = Pagination::default();
+			error_log($message);
+		}
+
 		$limit = $pagination->results;
 		$offset = ($page - 1) * $limit;
 		$translatedTexts = $this->translatedTextTable->findAll($limit, $offset);

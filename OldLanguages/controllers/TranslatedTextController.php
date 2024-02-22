@@ -3,6 +3,7 @@
 namespace controllers;
 
 use entities\TranslatedText;
+use entities\Pagination;
 
 class TranslatedTextController
 {
@@ -31,6 +32,13 @@ class TranslatedTextController
 	public function list(?int $page = 0)
 	{
 		$pagination = $this->paginationTable->find('controller_name', 'translatedtextController')[0];
+		if ($pagination == null) {
+			$message = 'Record column controller_name -> "translatedtextController" is not stored in database table pagination
+			default value pagination=5 is to be set.';
+			$pagination = Pagination::default();
+			error_log($message);
+		}
+
 		$limit = $pagination->results;
 		$translatedTexts = $this->translatedTextTable->findAll($limit, ($page-1)*$limit);
 		$title = 'Translated Text List';
