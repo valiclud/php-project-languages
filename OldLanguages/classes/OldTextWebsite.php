@@ -45,7 +45,20 @@ class OldTextWebsite implements \classes\Website
 
     public function getController(string $controllerName): ?object
     {
+        $controllers = [
+            'originaltext' => new \controllers\OriginalTextController($this->placesTable, $this->languageTable, $this->originalTextTable, $this->translatedTextTable,
+            $this->paginationTable, $this->authentication),
+            'translatedtext' => new \controllers\TranslatedTextController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
+            $this->authentication),
+            'author' => new \controllers\AuthorController($this->authorsTable),
+            'login' => new \controllers\LoginController($this->authentication),
+            'pagination' => new \controllers\PaginationController($this->paginationTable),
+            'api' => new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
+            $this->authentication)
+          ];
 
+          return $controllers[$controllerName] ?? null;
+/*
         if ($controllerName === 'originaltext') {
             $controller =  new \controllers\OriginalTextController($this->placesTable, $this->languageTable, $this->originalTextTable, $this->translatedTextTable,
              $this->paginationTable, $this->authentication);
@@ -66,6 +79,7 @@ class OldTextWebsite implements \classes\Website
         }
 
         return $controller;
+        */
     }
 
     public function checkLogin(string $uri): ?string
