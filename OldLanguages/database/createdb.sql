@@ -60,10 +60,26 @@ CREATE TABLE `author` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `audit`;
+CREATE TABLE `audit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `old_text` varchar(255) NOT NULL,
+  `insert_date` date NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `new_text_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
 alter table `translated_text`
     add foreign key (original_text_id) references original_text(id) on delete set null;
 alter table `original_text`
     add foreign key (old_language_id) references old_language(id) on delete set null;
 alter table `original_text`
     add foreign key (place_id) references place(id) on delete set null;
+alter table `audit`
+    add foreign key (author_id) references author(id);
+alter table `audit`
+    add foreign key (new_text_id) references original_text(id);
+alter table `audit`
+    add foreign key (new_text_id) references translated_text(id);
 SET FOREIGN_KEY_CHECKS=1;
