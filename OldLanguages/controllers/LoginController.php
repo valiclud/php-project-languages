@@ -8,7 +8,7 @@ class LoginController {
     }
 
     public function login() {
-        return ['template' => 'loginform.html.php',
+        return ['template' => 'loginForm.html.php',
                 'title' => 'Log in'
                ];
     }

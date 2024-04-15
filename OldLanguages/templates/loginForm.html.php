@@ -13,4 +13,4 @@ endif;
   <input type="submit" name="login" value="Log in">
 </form>
 
-<p>Don't have an account? <a href="/author/registrationForm">Click here to register</a></p>
+<p>Don't have an account? <a href="/author/registrationform">Click here to register</a></p>
