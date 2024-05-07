@@ -58,28 +58,6 @@ class OldTextWebsite implements \classes\Website
           ];
 
           return $controllers[$controllerName] ?? null;
-/*
-        if ($controllerName === 'originaltext') {
-            $controller =  new \controllers\OriginalTextController($this->placesTable, $this->languageTable, $this->originalTextTable, $this->translatedTextTable,
-             $this->paginationTable, $this->authentication);
-        } else if ($controllerName === 'translatedtext') {
-            $controller = new \controllers\TranslatedTextController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
-             $this->authentication);
-        } else if ($controllerName === 'author') {
-            $controller = new \controllers\AuthorController($this->authorsTable);
-        } else if ($controllerName == 'login') {
-            $controller = new \controllers\LoginController($this->authentication);
-        } else if ($controllerName == 'pagination') {
-            $controller = new \controllers\PaginationController($this->paginationTable);
-        } else if ($controllerName == 'api') {
-            $controller = new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
-            $this->authentication);
-        } else {
-            $controller = null;
-        }
-
-        return $controller;
-        */
     }
 
     public function checkLogin(string $uri): ?string
@@ -93,4 +71,5 @@ class OldTextWebsite implements \classes\Website
 
         return $uri;
     }
+
 }
