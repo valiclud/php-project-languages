@@ -45,11 +45,13 @@ class OriginalTextController
 		$originalTexts = $this->originalTextTable->findAll($limit, ($page - 1) * $limit);
 		$totalOriginalTexts = $this->originalTextTable->total();
 		$title = 'Original Text List';
+		//$user = $this->authentication->getUser();
 
 		return ['template' => 'originaltexts.html.php', 'title' => $title, 'variables' => [
 			'totalOriginalTexts' => $totalOriginalTexts,
 			'originalTexts' => $originalTexts,
 			'numPages' => ceil($totalOriginalTexts / $limit)
+			//'user' => $user
 		]];
 	}
 
