@@ -3,7 +3,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `original_text`;
 CREATE TABLE `original_text` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` varchar(255) NOT NULL,
+  `author_text` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `text` longtext NOT NULL,
   `text_img` longblob  NULL,
@@ -18,12 +18,12 @@ CREATE TABLE `original_text` (
 DROP TABLE IF EXISTS `translated_text`;
 CREATE TABLE `translated_text` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `author` varchar(255),
   `title` varchar(255),
   `text` longtext,
   `language` varchar(255),
   `insert_date` date,
   `revision` int,
+  `author_id` varchar(255),
   `original_text_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -57,6 +57,7 @@ CREATE TABLE `author` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
+  `permission` int(2),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -72,6 +73,8 @@ CREATE TABLE `audit` (
 
 alter table `translated_text`
     add foreign key (original_text_id) references original_text(id) on delete set null;
+alter table `translated_text`
+    add foreign key (author_id) references author(id) on delete set null;
 alter table `original_text`
     add foreign key (old_language_id) references old_language(id) on delete set null;
 alter table `original_text`
