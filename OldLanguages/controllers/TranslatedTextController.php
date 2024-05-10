@@ -11,7 +11,7 @@ class TranslatedTextController
 		private \classes\DatabaseTable $translatedTextTable,
         private \classes\DatabaseTable $originalTextTable,
 		private \classes\DatabaseTable $paginationTable,
-		private \classes\Authentication $authentication
+		private \classes\DatabaseTable $authorTable
 	) {
 	}
 
@@ -56,7 +56,7 @@ class TranslatedTextController
 		if (isset($id)) {
 			$translatedText = $this->translatedTextTable->find('id', $id)[0] ?? null;
 		} else {
-			$translatedText = new TranslatedText($this->originalTextTable);
+			$translatedText = new TranslatedText($this->originalTextTable, $this->authorTable);
 		}
 		$title = 'Edit Translated Text';
 
@@ -86,7 +86,7 @@ class TranslatedTextController
 			'template' => 'savetranslatedtext.html.php',
 			'title' => $title,
 			'variables' => [
-				'translatedtext' => new TranslatedText($this->originalTextTable)
+				'translatedtext' => new TranslatedText($this->originalTextTable, $this->authorTable)
 			]
 		];
 	}
@@ -108,7 +108,7 @@ class TranslatedTextController
 				'template' => 'savetranslatedtext.html.php',
 				'title' => $title,
 				'variables' => [
-					'originalText' => new TranslatedText($this->originalTextTable)
+					'originalText' => new TranslatedText($this->originalTextTable, $this->authorTable)
 				]
 			];
 		}

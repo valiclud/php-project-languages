@@ -12,7 +12,7 @@ class TranslatedTextApiController extends BaseApiController
 		private \classes\DatabaseTable $translatedTextTable,
 		private \classes\DatabaseTable $originalTextTable,
 		private \classes\DatabaseTable $paginationTable,
-		private \classes\Authentication $authentication
+		private \classes\DatabaseTable $authorTable
 	) {
 	}
 
@@ -51,7 +51,7 @@ class TranslatedTextApiController extends BaseApiController
 		if (isset($id) && $id != "") {
 			$translatedText = $this->translatedTextTable->find('id', $id)[0] ?? null;
 		} else {
-			$translatedText = new TranslatedText($this->originalTextTable);
+			$translatedText = new TranslatedText($this->originalTextTable, $this->authorTable);
 		}
 
 		$data = array("data" => $translatedText);
