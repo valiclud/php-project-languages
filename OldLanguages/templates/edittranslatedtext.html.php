@@ -1,7 +1,5 @@
 <form action="" method="post">
     <input type="hidden" name="translatedtext[id]" value="<?= $translatedText->id ?? '' ?>">
-    <label for="translatedtext">Type author of translated text:</label>
-    <input id="translatedtext" name="translatedtext[author]" value="<?= $translatedText->author ?? '' ?>"></input>
     <label for="translatedtext">Type title of translated text:</label>
     <input id="translatedtext" name="translatedtext[title]" value="<?= $translatedText->title ?? '' ?>"></input>
     <label for="translatedtext">Type your translated text:</label>
@@ -22,7 +20,7 @@
     <select id="idAuthor" name="translatedtext[author_id]" ">
     <option value="1">Select Author of Translation</option>
         <?php foreach ($translatedText->getAllAuthors() as $author) : ?>
-            <option value="<?= $author->id ?>" <?= ($author->id == $translatedText->author_id) ? ' selected' : '' ?>><?= htmlspecialchars($txt->title) ?>
+            <option value="<?= $author->id ?>" <?= ($author->id == $translatedText->author_id) ? ' selected' : '' ?>><?= htmlspecialchars($author->email) ?>
             </option>";
         <?php endforeach; ?>
     </select>
