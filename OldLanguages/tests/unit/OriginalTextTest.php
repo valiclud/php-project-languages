@@ -37,7 +37,7 @@ final class OriginalTextTest extends TestCase
 
     public function test_default_original_text(): void
     {
-        $this->assertSame("", $this->originalText->author);
+        $this->assertSame("", $this->originalText->author_text);
         $this->assertSame("", $this->originalText->title);
         $this->assertSame("", $this->originalText->text);
         $this->assertSame("", $this->originalText->century);
@@ -66,7 +66,7 @@ final class OriginalTextTest extends TestCase
 
         $this->originalText->setAuthor($author);
 
-        $this->assertSame($author, $this->originalText->author);
+        $this->assertSame($author, $this->originalText->author_text);
     }
 
     protected function tearDown(): void

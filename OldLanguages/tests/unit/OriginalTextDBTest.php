@@ -51,7 +51,7 @@ final class OriginalTextDBTest extends TestCase
         $originalTextDB = $this->originalTextTable->find('id', $savedId)[0] ?? null;
 
         $this->assertNotNull($originalTextDB);
-        $this->assertSame($originalTextDB->author,"Unknown");
+        $this->assertSame($originalTextDB->author_text,"Unknown");
         $this->assertSame($originalTextDB->title,"Battle xxxl");
         $this->assertSame($originalTextDB->text,"And so on...");
         $this->assertSame($originalTextDB->century,'1 B.C.');

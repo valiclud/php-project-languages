@@ -1,14 +1,15 @@
 <form action="" method="post">
   <input type="hidden" name="originaltext[id]" value="<?= $originalText->id ?? '' ?>">
   <label for="originaltext">Type author of original text:</label>
-  <input id="originaltext" name="originaltext[author]" value="<?= $originalText->author ?? '' ?>"></input>
+  <input id="originaltext" name="originaltext[author_text]" value="<?= $originalText->author_text ?? '' ?>"></input>
   <label for="originaltext">Type title of original text:</label>
   <input id="originaltext" name="originaltext[title]" value="<?= $originalText->title ?? '' ?>"></input>
   <label for="originaltext">Select image to upload:</label>
-  <input type="file" name="myfile"/>
-  <?php
+  <input type="file" name="myfile" value="<?= $originalText->text_img ?? '' ?>"></input>
+  <!--<?php
   echo '<img class="autoResizeImage" src="data:image/jpeg;base64,'.base64_encode($originalText->text_img).'"/>';
   ?>
+  -->
   <label for="originaltext">Type your original text:</label>
   <textarea id="originaltext" name="originaltext[text]" rows="3" cols="40"><?= $originalText->text ?? '' ?></textarea>
   <label for="originaltext">Century:</label>

@@ -17,6 +17,15 @@
             </option>";
         <?php endforeach; ?>
     </select>
+   
+   <label for="forAuthor">Author of translation: </label>
+    <select id="idAuthor" name="translatedtext[author_id]" ">
+    <option value="1">Select Author of Translation</option>
+        <?php foreach ($translatedText->getAllAuthors() as $author) : ?>
+            <option value="<?= $author->id ?>" <?= ($author->id == $translatedText->author_id) ? ' selected' : '' ?>><?= htmlspecialchars($txt->title) ?>
+            </option>";
+        <?php endforeach; ?>
+    </select>
 
     <input type="submit" name="submit" value="Save">
 </form>

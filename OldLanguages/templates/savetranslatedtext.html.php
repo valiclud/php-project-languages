@@ -1,6 +1,6 @@
 <form action="" method="post">
   <label for="translatedtext">Type author of translated text:</label>
-  <input id="translatedtext" name="translatedtext[author]"><?= $translatedText->author ?? '' ?></input>
+  <input id="translatedtext" name="translatedtext[author]"><?= $translatedText->author_text ?? '' ?></input>
   <label for="translatedtext">Type title of translated text:</label>
   <input id="translatedtext" name="translatedtext[title]"><?= $translatedText->title ?? '' ?></input>
   <label for="translatedtext">Type your translated text:</label>

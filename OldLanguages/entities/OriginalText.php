@@ -7,7 +7,7 @@ class OriginalText
 
     public $id;
 
-    public $author;
+    public $author_text;
 
     public $title;
 
@@ -60,7 +60,7 @@ class OriginalText
         \classes\DatabaseTable $oldLanguagesTable
     ) {
         $instance = new self($placesTable, $oldLanguagesTable);
-        $instance->author = $author;
+        $instance->author_text = $author;
         $instance->title = $title;
         $instance->text = $text;
         $instance->text_img = $text_img;
@@ -78,7 +78,7 @@ class OriginalText
     }
     public function setAuthor(String $author): void
     {
-        $this->author = $author;
+        $this->author_text = $author;
     }
 
     public function getPlace()

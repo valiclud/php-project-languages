@@ -14,7 +14,7 @@
   <?php 
   $date = date_create($translatedText->insert_date);
   echo "<td hidden>".htmlspecialchars($translatedText->id, ENT_QUOTES, 'UTF-8')."</td>"
-  ."<td>".htmlspecialchars($translatedText->author, ENT_QUOTES, 'UTF-8')."</td>"
+  ."<td>".htmlspecialchars($translatedText->getAuthor()->email, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>".htmlspecialchars($translatedText->title, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>".htmlspecialchars($translatedText->text, ENT_QUOTES, 'UTF-8')."</td>"
   ."<td>".htmlspecialchars($translatedText->getOriginalText()->title, ENT_QUOTES, 'UTF-8')."</td>"

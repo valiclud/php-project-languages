@@ -49,4 +49,10 @@ class TranslatedText
     {
         return $this->originalTextsTable->findAll();
     }
+
+    public function getAllAuthors()
+    {
+        return $this->authorsTable->findAll();
+    }
 }
+
