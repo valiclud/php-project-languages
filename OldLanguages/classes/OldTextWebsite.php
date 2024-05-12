@@ -61,7 +61,27 @@ class OldTextWebsite implements \classes\Website
           return $controllers[$controllerName] ?? null;
     }
 
-    public function checkLogin(string $uri): ?string
+    public function checkLogin(string $uri): ?string {
+
+        $restrictedPages = [
+            'originaltext/edit' => \entities\Author::EDIT_TEXT,
+            'originaltext/delete' => \entities\Author::DELETE_TEXT,
+            'originaltext/save' => \entities\Author::SAVE_TEXT,
+            'originaltext/list' => \entities\Author::LIST_TEXT
+        ];
+           
+        if (isset($restrictedPages[$uri])) {
+          if (!$this->authentication->isLoggedIn()
+             || !$this->authentication->getUser()->hasPermission($restrictedPages[$uri])) {
+            header('location: /login/login');
+            exit();
+          }
+        }
+
+        return $uri;
+    }
+
+    public function checkLogin2(string $uri): ?string
     {
         $restrictedPages = ['originaltext/edit', 'originaltext/delete', 'originaltext/save'];
 

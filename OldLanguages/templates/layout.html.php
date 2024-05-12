@@ -17,6 +17,7 @@
       <?php if ($loggedIn): ?>
       <li><a href="/translatedtext/save">Add a new Translated Text</a></li>
       <li><a href="/originaltext/save">Add a new Original Text</a></li>
+      <li><a href="/author/list">Authorization</a></li>
       <?php endif; ?>
       <?php if ($loggedIn): ?>
       <li><a href="/login/logout">Log out</a></li>

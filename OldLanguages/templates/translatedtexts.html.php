@@ -39,6 +39,4 @@ for ($i = 1; $i <= $numPages; $i++):
 <?php endfor; ?>
 
 </div>
-
-
 </div>

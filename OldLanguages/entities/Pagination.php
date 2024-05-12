@@ -27,7 +27,7 @@ class Pagination
         return $instance;
     }
 
-    private function __construct()
+    public function __construct()
     {
     }
 }

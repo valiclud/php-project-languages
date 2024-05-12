@@ -40,13 +40,15 @@ class AuthorController {
         if (empty($author['password'])) {
             $errors[] = 'Password cannot be blank';
         }
+        var_dump("I AM HERE 0");
         // If there are no errors, proceed with saving the record in the database
         if (count($errors) === 0) {
             $author['password'] = password_hash($author['password'], PASSWORD_DEFAULT);
-			
+            $author['permission'] = 2;
+			var_dump("I AM HERE");
             $this->authorsTable->save($author);
 
-           header('Location: /author/success');
+         //  header('Location: /author/success');
         } else {
             // If the data is not valid, show the form again
             return ['template' => 'register.html.php',
@@ -58,4 +60,44 @@ class AuthorController {
       ];
         }
     }
+
+    public function list() {
+        $authors = $this->authorsTable->findAll();
+
+        return ['template' => 'authors.html.php',
+            'title' => 'Author List',
+            'variables' => [
+            'authors' => $authors
+            ]
+        ];
+    }
+
+    public function permissions($id = null) {
+
+        $author = $this->authorsTable->find('id', $id)[0];
+
+        $reflected = new \ReflectionClass('\entities\Author');
+        $constants = $reflected->getConstants();
+
+        return ['template' => 'permissions.html.php',
+            'title' => 'Edit Permissions',
+            'variables' => [
+            'author' => $author,
+            'permissions' => $constants
+            ]
+        ];
+    }
+
+    public function permissionsSubmit($id = null) {
+        var_dump("I AM HERE 5 ". " id " . print_r($_POST['permissions']));
+        $author = [
+            'id' => $id,
+            'permission' => array_sum($_POST['permissions'] ?? [])
+        ];
+
+        $this->authorsTable->update($author);
+
+      //  header('location: /author/list');
+    }
+
 }
