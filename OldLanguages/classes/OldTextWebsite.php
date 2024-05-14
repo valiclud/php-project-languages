@@ -12,6 +12,7 @@ class OldTextWebsite implements \classes\Website
     private ?\classes\DatabaseTable $authorsTable;
     private ?\classes\DatabaseTable $paginationTable;
     private ?\classes\Authentication $authentication;
+    private ?\classes\statistics\TranslatedTextStrategy $statistic;
 
     public function __construct()
     {
@@ -25,6 +26,7 @@ class OldTextWebsite implements \classes\Website
             $this->authorsTable = new \classes\DatabaseTable($pdo, 'author', 'id', '\entities\Author');
             $this->paginationTable = new \classes\DatabaseTable($pdo, 'pagination', 'id', '\entities\Pagination');
             $this->authentication = new \classes\Authentication($this->authorsTable, 'email', 'password');
+            $this->statistic = new \classes\statistics\TranslatedTextStrategy($this->translatedTextTable);
         } catch (\PDOException $e) {
             echo "<script>console.log('$e');</script>";
             echo "$e";
@@ -55,7 +57,8 @@ class OldTextWebsite implements \classes\Website
             'login' => new \controllers\LoginController($this->authentication),
             'pagination' => new \controllers\PaginationController($this->paginationTable),
             'api' => new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
-            $this->authorsTable)
+            $this->authorsTable),
+            'statistic' => new \controllers\StatisticController($this->translatedTextTable, $this->originalTextTable)
           ];
 
           return $controllers[$controllerName] ?? null;
