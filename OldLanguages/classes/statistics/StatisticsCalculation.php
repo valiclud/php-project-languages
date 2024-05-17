@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace classes\statistics;
 
@@ -20,5 +20,9 @@ class StatisticsCalculation {
 
     public function calcNoOfTranslatedTexts() {
         return $this->strategy->calculateNumberOfTexts();
+     }
+
+     public function calculateNoOfLanguages() {
+        return $this->strategy->calculateNoOfLanguages();
      }
 }

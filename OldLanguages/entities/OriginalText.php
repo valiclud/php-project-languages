@@ -25,9 +25,9 @@ class OriginalText
 
     public $old_language_id;
 
-    private ?object $place = null;
+    public ?object $place = null;
 
-    private ?object $oldLanguage = null;
+    public ?object $oldLanguage = null;
 
     public static function default($placesTable, $oldLanguagesTable): self
     {

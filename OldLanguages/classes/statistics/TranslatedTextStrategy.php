@@ -31,6 +31,9 @@ class TranslatedTextStrategy implements CalculateStatisticStrategy
     {
         return 1;
     }
+    public function calculateNoOfLanguages(): int {
+        return -1;
+    }
     private function getAllTranslatedTexts()
     {
         if (empty($this->allTexts)) {

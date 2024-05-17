@@ -7,5 +7,6 @@ interface CalculateStatisticStrategy {
     public function calculateNumberOfRevisions() : int;
     public function calculateAverageRevisionPerText() : float;
     public function calculateAverageAccessInDays() : float;
+    public function calculateNoOfLanguages(): int;
 
 }
