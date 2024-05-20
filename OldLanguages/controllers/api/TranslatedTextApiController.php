@@ -41,7 +41,7 @@ class TranslatedTextApiController extends BaseApiController
 		$data = array("total" => $totalTranslatedTexts, "total_pages" => $totalPages, "per_page" => $pagination->results, 
 			"page_number" => $page, "data" => $translatedTexts);
 		$responseData = json_encode($data);
-		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK"));
+		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
 
 		return null;
 	}
@@ -56,7 +56,7 @@ class TranslatedTextApiController extends BaseApiController
 
 		$data = array("data" => $translatedText);
 		$responseData = json_encode($data);
-		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK"));
+		$this->sendOutput($responseData, array('Content-Type: application/json'));
 
 		return null;
 	}

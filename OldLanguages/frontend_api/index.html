@@ -1,0 +1,73 @@
+<!DOCTYPE html
+   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+   <meta charset="utf-8">
+   <link rel="stylesheet" href="/frontend_api/styles/oldlanguages.css">
+</head>
+
+<body>
+   
+   <h2>Convert JSON data into a html table using Javascript</h2>
+   <p>Click the following button to convert JSON results into HTML table</p><br>
+   <button id="btn" onclick="convert()"> Click Here </button> <br>
+   <h3> Resulting Table: </h3>
+   <div id="container"></div>
+   <script>
+      function convert() {
+         const apiUrl = 'http://localhost/api/list';
+         fetch(apiUrl, {
+            method: "GET"
+         })
+            .then(response => {
+               if (!response.ok) {
+                  throw new Error('Network response was not ok');
+               }
+               return response.json();
+            })
+            .then(data => {
+               console.log(data.data);
+               getTable(data.data)
+            })
+            .catch(error => {
+               console.error('Error:', error);
+            });
+      }
+
+      function getTable(jsonData) {
+         let table = document.createElement("table");
+         let cols = Object.keys(jsonData[0]);
+         let thead = document.createElement("thead");
+         let tr = document.createElement("tr");
+
+         cols.forEach((item) => {
+            let th = document.createElement("th");
+            th.innerText = item;
+            tr.appendChild(th);
+         });
+         thead.appendChild(tr);
+         table.append(tr)
+ 
+         jsonData.forEach((item) => {
+            let tr = document.createElement("tr");
+            let vals = Object.values(item);
+            vals.forEach((elem) => {
+               let td = document.createElement("td");
+               td.innerText = elem;
+               tr.appendChild(td);
+            });
+            table.appendChild(tr);
+         });
+         container.appendChild(table)
+      }
+   </script>
+   <main>
+      </main>
+    
+      <footer>
+      &copy; Ludvik Valicek 2024
+      </footer>
+</body>
+
+</html>
