@@ -1,22 +1,38 @@
-<!DOCTYPE html
-   PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 
+<html>
 <head>
    <meta charset="utf-8">
    <link rel="stylesheet" href="/frontend_api/styles/oldlanguages.css">
 </head>
 
-<body>
-   
-   <h2>Convert JSON data into a html table using Javascript</h2>
-   <p>Click the following button to convert JSON results into HTML table</p><br>
-   <button id="btn" onclick="convert()"> Click Here </button> <br>
+<body>  
+   <h2>Internet Old Text Databases</h2>
+</br>
+<p>Welcome to the Internet Old Text Database</p>
+
+<p>There will be displayed original ancient texts and ancient texts fragments together with their translation and further information,
+     as is period, place, author and so on...</p>
+
+     <ul>
+      <li><a href="/frontend_api/index">Home</a></li>
+      <li><button id="btn" onclick="convert('http://localhost/originaltextapi/list')">Original Text List</button> </li>
+      <li><button id="btn" onclick="convert('http://localhost/translatedtextapi/list')">Translated Text List</button> </li>
+      <li><a href="/pagination/list">Pagination Setting</a></li>
+      <li><a href="/statistic/list">Statistics</a></li>
+      <li><a href="/frontend_api/list">Web Api</a></li>
+      <li><a href="/translatedtext/save">Add a new Translated Text</a></li>
+      <li><button id="btn" onclick="('/editoriginaltext.html')">Original Text Edit</button> </li>
+      <li><a href="/frontend_api/editoriginaltext">Home</a></li>
+      <li><a href="../originaltexapi/posting">Add a new Original Text</a></li>
+      <li><a href="/author/list">Authorization</a></li>
+      <li><a href="/login/logout">Log out</a></li>
+      <li><a href="/login/login">Log in</a></li>
+    </ul>
    <h3> Resulting Table: </h3>
    <div id="container"></div>
    <script>
-      function convert() {
-         const apiUrl = 'http://localhost/api/list';
+      function convert(apiUrl) {
          fetch(apiUrl, {
             method: "GET"
          })
@@ -63,11 +79,6 @@
       }
    </script>
    <main>
-      </main>
-    
-      <footer>
-      &copy; Ludvik Valicek 2024
-      </footer>
+   </main>
 </body>
-
 </html>

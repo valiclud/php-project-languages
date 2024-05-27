@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../frontend_api/styles/oldlanguages.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h2>Internet Old Text Databases</h2>
+  </br>
+  <p>Welcome to the Internet Old Text Database</p>
+  <p>There will be displayed original ancient texts and ancient texts fragments together with their translation and
+    further information, as is period, place, author and so on...</p>
+
+  <form id="originaltextForm" method="post" onsubmit="sendJSON()">
+    <input type="hidden" name="origtextid" value="1">
+    <label for="origtextauthor" >Type author of original text:</label>
+    <input type="text" id="origtextauthor" name="origtextauthor"></input>
+    <label for="origtexttitle" >Type title of original text:</label>
+    <input type="text" id="origtexttitle" name="origtexttitle"></input>
+    <label for="origtextimage">Select image to upload:</label>
+    <input type="text" id="origtextimage" name="origtextimage"></input>
+    <label for="origtexttext">Type your original text:</label>
+    <textarea id="origtexttext" name="origtexttext" rows="3" cols="40"></textarea>
+    <label for="origtextcentury">Century:</label>
+    <input type="text" id="origtextcentury" name="origtextcentury"></input>
+    <label for="idlanguage"> Language : </label>
+    <select id="idlanguage" name="idlanguage">
+      <option value="0">Select Language</option>
+      <option value="1">Armaiac</option>
+      <option value="2">Ancient Greek</option>
+      <option value="3">Egyptian</option>
+      <option value="4">Egyptian Kopt</option>
+    </select>
+    <label for="idplace"> Place : </label>
+    <select id="idplace" name="idplace">
+      <option value="0">Select Place</option>
+      <option value="1">Alexandria</option>
+      <option value="2">Athens</option>
+      <option value="3">Cyprus</option>
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+  <main>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  <script>
+    function sendJSON() {
+      let form = document.getElementById("originaltextForm");
+      let formData = {};
+      for (let i = 0; i < form.elements.length; i++) {
+        let element = form.elements[i];
+        if (element.type !== "submit") {
+          formData[element.name] = element.value;
+        }
+      }
+      let jsonData = JSON.stringify(formData);
+      let urlPost = 'http://localhost/originaltextapi/post';
+
+      fetch(urlPost, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: jsonData
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+
+      /*     Commented working code 
+        $.ajax({
+             method: 'POST',
+             dataType: 'json',
+             url: urlPost,
+             data: jsonData,
+             contentType: "application/json; charset=utf-8",
+             traditional: true,
+             success: function () {
+               console.log("SUCCESS");
+               console.log(data);
+             }
+         });
+     */
+    }
+  </script>
+</body>
+</html>
