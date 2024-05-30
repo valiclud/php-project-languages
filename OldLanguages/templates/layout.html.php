@@ -15,6 +15,7 @@
       <li><a href="/translatedtext/list">Translated Text List</a></li>
       <li><a href="/pagination/list">Pagination Setting</a></li>
       <li><a href="/statistic/list">Statistics</a></li>
+      <li><a href="/originaltextapi/list">Web Api</a></li>
       <?php if ($loggedIn): ?>
       <li><a href="/translatedtext/save">Add a new Translated Text</a></li>
       <li><a href="/originaltext/save">Add a new Original Text</a></li>

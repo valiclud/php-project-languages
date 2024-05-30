@@ -15,8 +15,7 @@ class BaseApiController
     public function __call($name, $arguments)
 
     {
-
-        $this->sendOutput('', array('HTTP/1.1 404 Not Found'));
+        $this->sendOutput('', array('HTTP/1.1 404 Not Founding'));
     }
 
     /**

@@ -60,6 +60,8 @@
       let jsonData = JSON.stringify(formData);
       let urlPost = 'http://localhost/originaltextapi/post';
 
+      console.log(jsonData);
+
       fetch(urlPost, {
         method: "POST",
         headers: {

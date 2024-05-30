@@ -56,11 +56,12 @@ class OldTextWebsite implements \classes\Website
             'author' => new \controllers\AuthorController($this->authorsTable),
             'login' => new \controllers\LoginController($this->authentication),
             'pagination' => new \controllers\PaginationController($this->paginationTable),
-            'api' => new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
+            'statistic' => new \controllers\StatisticController($this->translatedTextTable, $this->originalTextTable),
+            'translatedtextapi' => new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
             $this->authorsTable),
-            'statistic' => new \controllers\StatisticController($this->translatedTextTable, $this->originalTextTable)
+            'originaltextapi' => new \controllers\api\OriginalTextApiController($this->placesTable, $this->languageTable, $this->originalTextTable,$this->paginationTable, 
+            $this->authentication),
           ];
-
           return $controllers[$controllerName] ?? null;
     }
 
