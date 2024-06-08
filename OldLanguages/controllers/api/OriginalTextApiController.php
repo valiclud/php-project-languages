@@ -15,7 +15,6 @@ class OriginalTextApiController extends BaseApiController
 		private \classes\DatabaseTable $paginationTable,
 		private \classes\Authentication $authentication
 	) {
-		error_log("konstruktor OriginalTextApiController");
 	}
 
 	public function delete($id = null)
@@ -82,7 +81,7 @@ Access-Control-Allow-Headers: *
 		$totaloriginalTexts = $this->originalTextTable->total();
 		$totalPages = ceil($totaloriginalTexts / 3);
 		$data = array("total" => $totaloriginalTexts, "total_pages" => $totalPages, "per_page" => 3, 
-			"page_number" => 3, "data" => $originalTexts);
+			"page_number" => 3, "da$origText['place_id'] = $post['idplace'];ta" => $originalTexts);
 		$responseData = json_encode($data);
 
 		//$this->sendOutput(null, array('Content-Type: application/json', "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));

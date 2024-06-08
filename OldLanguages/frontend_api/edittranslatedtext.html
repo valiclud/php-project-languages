@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../frontend_api/styles/oldlanguages.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body>
+  <h2>Internet Old Text Databases</h2>
+  </br>
+  <p>Welcome to the Internet Old Text Database</p>
+  <p>There will be displayed transinal ancient texts and ancient texts fragments together with their translation and
+    further information, as is period, place, author and so on...</p>
+
+  <form id="translatedtextForm" method="post" onsubmit="sendJSON()">
+    <input type="hidden" name="transtextid" value="1">
+    <label for="transtexttitle" >Type title of transinal text:</label>
+    <input type="text" id="transtexttitle" name="transtexttitle"></input>
+    <label for="transtexttext">Type your transinal text:</label>
+    <textarea id="transtexttext" name="transtexttext" rows="3" cols="40"></textarea>
+    <label for="transtextlanguage" >Type language of transinal text:</label>
+    <input type="text" id="transtextlanguage" name="transtextlanguage"></input>
+     <label for="idorigtext"> Original Text : </label>
+    <select id="idorigtext" name="idorigtext">
+      <option value="0">Select Original <Textarea:cols:rows></Textarea:cols:rows></option>
+      <option value="1">Text 1</option>
+      <option value="2">Text 2</option>
+      <option value="3">Text 3</option>
+    </select>
+    <label for="idauthor">Translated Text Author: </label>
+    <select id="idauthor" name="idauthor">
+      <option value="0">Select Author <Textarea:cols:rows></Textarea:cols:rows></option>
+      <option value="1">Author 1</option>
+      <option value="2">Author 2</option>
+      <option value="3">Author 3</option>
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+  <main>
+  </main>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crosstransin="anonymous"></script>
+  <script>
+    function sendJSON() {
+      let form = document.getElementById("translatedtextForm");
+      let formData = {};
+      for (let i = 0; i < form.elements.length; i++) {
+        let element = form.elements[i];
+        if (element.type !== "submit") {
+          formData[element.name] = element.value;
+        }
+      }
+      let jsonData = JSON.stringify(formData);
+      let urlPost = 'http://localhost/translatedtextapi/post';
+
+      console.log(jsonData);
+
+      fetch(urlPost, {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+        },
+        body: jsonData
+      })
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+
+      /*     Commented working code 
+        $.ajax({
+             method: 'POST',
+             dataType: 'json',
+             url: urlPost,
+             data: jsonData,
+             contentType: "application/json; charset=utf-8",
+             traditional: true,
+             success: function () {
+               console.log("SUCCESS");
+               console.log(data);
+             }
+         });
+     */
+    }
+  </script>
+</body>
+</html>
