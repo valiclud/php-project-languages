@@ -3,7 +3,7 @@
 <html>
 <head>
    <meta charset="utf-8">
-   <link rel="stylesheet" href="/frontend_api/styles/oldlanguages.css">
+   <link rel="stylesheet" href="../frontend_api/styles/oldlanguages.css">
 </head>
 
 <body>  
@@ -21,8 +21,8 @@
       <li><a href="/pagination/list">Pagination Setting</a></li>
       <li><a href="/statistic/list">Statistics</a></li>
       <li><a href="/frontend_api/list">Web Api</a></li>
-      <li><a href="/translatedtext/save">Add a new Translated Text</a></li>
-      <li><button id="btn" onclick="('/editoriginaltext.html')">Original Text Edit</button> </li>
+      <li><a href="../frontend_api/edittranslatedtext.html">Add New Translated Text</a></li>
+      <li><a href="../frontend_api/editoriginaltext.html">Add New Original Text</a></li>
       <li><a href="/frontend_api/editoriginaltext">Home</a></li>
       <li><a href="../originaltexapi/posting">Add a new Original Text</a></li>
       <li><a href="/author/list">Authorization</a></li>
@@ -52,7 +52,15 @@
       }
 
       function getTable(jsonData) {
-         let table = document.createElement("table");
+         let table = document.getElementsByTagName("table")[0];
+         if(Boolean(table)) {
+            var rowCount = table.rows.length;
+            for(var i = 0; i < table.rows.length;) {   
+                  table.deleteRow(i);
+               }
+         } else {
+            table = document.createElement("table");
+         }       
          let cols = Object.keys(jsonData[0]);
          let thead = document.createElement("thead");
          let tr = document.createElement("tr");
