@@ -2,7 +2,7 @@
 
 namespace entities;
 
-class OldLanguage
+class Audit
 {
 
     public $id;
@@ -18,7 +18,6 @@ class OldLanguage
     public $new_translatedtext_id;
 
     private ?object $author = null;
-
     private ?object $new_originaltext = null;
     private ?object $new_translatedtext = null;
 
@@ -56,8 +55,8 @@ class OldLanguage
     }
 
     private function __construct(private \classes\DatabaseTable $authorTable, 
-    \classes\DatabaseTable $originalTextTable,
-    \classes\DatabaseTable $translatedTextTable)
+    private \classes\DatabaseTable $originalTextTable,
+    private \classes\DatabaseTable $translatedTextTable)
     {
     }
 
@@ -67,6 +66,22 @@ class OldLanguage
             $this->author = $this->authorTable->find('id', $this->author_id)[0];
         }
         return $this->author;
+    }
+
+    public function getOriginalText()
+    {
+        if (empty($this->new_originaltext)) {
+            $this->new_originaltext = $this->originalTextTable->find('id', $this->new_originaltext_id)[0];
+        }
+        return $this->new_originaltext;
+    }
+
+    public function getTranslatedText()
+    {
+        if (empty($this->new_translatedtext)) {
+            $this->new_translatedtext = $this->translatedTextTable->find('id', $this->new_translatedtext)[0];
+        }
+        return $this->new_translatedtext;
     }
 
 }
