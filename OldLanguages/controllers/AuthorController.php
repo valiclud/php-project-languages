@@ -33,7 +33,7 @@ class AuthorController {
 
             // Search for the lowercase version of $author['email']
             if (count($this->authorsTable->find('email', $author['email'])) > 0) {
-                $errors[] = 'That email address is already registered';
+                $errors[] = 'This email address is already registered';
             }
         }
 

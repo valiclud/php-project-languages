@@ -5,7 +5,7 @@ class EntryPoint {
     public function __construct(private \classes\Website $website) {
     }
 
-    public function run($uri, $method) {
+    public function run(string $uri, string $method): void {
         try {
             $this->checkUri($uri);
             if ($uri == '' || $uri == 'originaltext') {
@@ -50,7 +50,7 @@ class EntryPoint {
         echo $this->loadTemplate('layout.html.php', $layoutVariables);
     }
 
-    private function loadTemplate($templateFileName, $variables) {
+    private function loadTemplate(string $templateFileName, array $variables): string {
         extract($variables);
 
         ob_start();
@@ -59,7 +59,7 @@ class EntryPoint {
         return ob_get_clean();
     }
 
-    private function checkUri($uri) {
+    private function checkUri(string $uri): void {
         if ($uri != strtolower($uri)) {
             http_response_code(301);
             header('location: ' . strtolower($uri));
