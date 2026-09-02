@@ -26,14 +26,17 @@ INSERT INTO author (id,email,password, permission)
 VALUES (1 /*not nullable*/,'root@root.cz' /*not nullable*/,'root' /*not nullable*/, 64);
 
 INSERT INTO translated_text (id,title,text,language,insert_date,revision,author_id,original_text_id) 
-VALUES (2 /*not nullable*/,'s','s','s',{d '2023-12-04'},0,1,1 /*not nullable*/);
+VALUES (2 /*not nullable*/,'s','s','s',{d '2023-12-04'},0,1,2 /*not nullable*/);
 INSERT INTO translated_text (id,title,text,language,insert_date,revision,author_id,original_text_id)
-VALUES (1 /*not nullable*/,'s','s','s',{d '2023-12-04'},0,1, 1 /*not nullable*/);
+VALUES (1 /*not nullable*/,'s','s','s',{d '2023-12-04'},0,1, 4 /*not nullable*/);
 INSERT INTO translated_text (id,title,text,language,insert_date,revision,author_id,original_text_id)
 VALUES (4 /*not nullable*/,'tt','tt','tt',{d '2023-12-04'},0,1, 2 /*not nullable*/);
 
 INSERT INTO pagination (id,controller_name,results)
 VALUES ( 1/*not nullable*/,'translatedtextController' /*not nullable*/,3 /*not nullable*/);
+INSERT INTO pagination (id,controller_name,results)
 VALUES ( 2/*not nullable*/,'originaltextController' /*not nullable*/,4 /*not nullable*/);
+INSERT INTO pagination (id,controller_name,results)
+VALUES ( 3/*not nullable*/,'apiOriginalTextController' /*not nullable*/,10 /*not nullable*/);
 
 SET FOREIGN_KEY_CHECKS=1;
