@@ -12,6 +12,7 @@ CREATE TABLE `original_text` (
   `hits` int NOT NULL,
   `place_id` int(11),
   `old_language_id` int(11),
+  `author_id` int(11),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -79,6 +80,8 @@ alter table `original_text`
     add foreign key (old_language_id) references old_language(id) on delete set null;
 alter table `original_text`
     add foreign key (place_id) references place(id) on delete set null;
+alter table `original_text`
+    add foreign key (author_id) references author(id) on delete set null;
 alter table `audit`
     add foreign key (author_id) references author(id);
 alter table `audit`

@@ -8,12 +8,12 @@ VALUES (3 /*not nullable*/,'Egyptian' /*not nullable*/,'light' /*not nullable*/)
 INSERT INTO old_language (id,language,period)
 VALUES (4 /*not nullable*/,'Egyptian Kopt' /*not nullable*/,'light' /*not nullable*/);
 
-INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id)
-VALUES (2 /*not nullable*/,'s' /*not nullable*/,'s' /*not nullable*/,'s' /*not nullable*/,'s',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,1 /*not nullable*/,1 /*not nullable*/);
-INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id)
-VALUES (4 /*not nullable*/,'t' /*not nullable*/,'t' /*not nullable*/,'s' /*not nullable*/,'t',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,2 /*not nullable*/,2 /*not nullable*/);
-INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id)
-VALUES (7 /*not nullable*/,'u' /*not nullable*/,'u' /*not nullable*/,'u' /*not nullable*/,'s',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,3 /*not nullable*/,3 /*not nullable*/);
+INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id, author_id)
+VALUES (2 /*not nullable*/,'s' /*not nullable*/,'s' /*not nullable*/,'s' /*not nullable*/,'s',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,1 /*not nullable*/,1 /*not nullable*/,1 /*not nullable*/);
+INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id, author_id)
+VALUES (4 /*not nullable*/,'t' /*not nullable*/,'t' /*not nullable*/,'s' /*not nullable*/,'t',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,2 /*not nullable*/,2 /*not nullable*/,1 /*not nullable*/);
+INSERT INTO original_text (id,author_text,title,text,text_img,century,insert_date,hits,place_id,old_language_id, author_id)
+VALUES (7 /*not nullable*/,'u' /*not nullable*/,'u' /*not nullable*/,'u' /*not nullable*/,'s',0 /*not nullable*/,{d '2023-12-04'} /*not nullable*/,0 /*not nullable*/,3 /*not nullable*/,3 /*not nullable*/,1 /*not nullable*/);
 
 INSERT INTO place (id,place,country)
 VALUES (1 /*not nullable*/,'Alexandria' /*not nullable*/,'Egypt' /*not nullable*/);
