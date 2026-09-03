@@ -13,9 +13,9 @@ class OriginalTextController
 		private \classes\DatabaseTable $originalTextTable,
 		private \classes\DatabaseTable $translatedTextTable,
 		private \classes\DatabaseTable $paginationTable,
-		private \classes\Authentication $authentication
-	) {
-	}
+		private \classes\Authentication $authentication,
+		private \classes\DatabaseTable $authorsTable
+	) {}
 
 	public function home()
 	{
@@ -45,13 +45,13 @@ class OriginalTextController
 		$originalTexts = $this->originalTextTable->findAll($limit, ($page - 1) * $limit);
 		$totalOriginalTexts = $this->originalTextTable->total();
 		$title = 'Original Text List';
-		//$user = $this->authentication->getUser();
+		$user = $this->authentication->getUser();
 
 		return ['template' => 'originaltexts.html.php', 'title' => $title, 'variables' => [
 			'totalOriginalTexts' => $totalOriginalTexts,
 			'originalTexts' => $originalTexts,
-			'numPages' => ceil($totalOriginalTexts / $limit)
-			//'user' => $user
+			'numPages' => ceil($totalOriginalTexts / $limit),
+			'user' => $user
 		]];
 	}
 
@@ -91,7 +91,7 @@ class OriginalTextController
 			'template' => 'saveoriginaltext.html.php',
 			'title' => $title,
 			'variables' => [
-				'originalText' => new OriginalText($this->placesTable, $this->languageTable)
+				'originalText' => new OriginalText($this->placesTable, $this->languageTable, $this->authorsTable)
 			]
 		];
 	}
@@ -117,10 +117,10 @@ class OriginalTextController
 				'template' => 'saveoriginaltext.html.php',
 				'title' => $title,
 				'variables' => [
-					'originalText' => new OriginalText($this->placesTable, $this->languageTable)
+					'originalText' => new OriginalText($this->placesTable, $this->languageTable, $this->authorsTable),
+					'error' => 'Please fill in all required fields.'
 				]
 			];
 		}
 	}
-
 }

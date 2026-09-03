@@ -21,7 +21,7 @@ class OldTextWebsite implements \classes\Website
             $this->placesTable = new \classes\DatabaseTable($pdo, 'place', 'id', '\entities\Place');
             $this->languageTable = new \classes\DatabaseTable($pdo, 'old_language', 'id', '\entities\OldLanguage');
             $this->authorsTable = new \classes\DatabaseTable($pdo, 'author', 'id', '\entities\Author');
-            $this->originalTextTable = new \classes\DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable]);
+            $this->originalTextTable = new \classes\DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable, &$this->authorsTable]);
             $this->translatedTextTable = new \classes\DatabaseTable($pdo, 'translated_text', 'id', '\entities\TranslatedText', [&$this->originalTextTable, &$this->authorsTable]);
             $this->authorsTable = new \classes\DatabaseTable($pdo, 'author', 'id', '\entities\Author');
             $this->paginationTable = new \classes\DatabaseTable($pdo, 'pagination', 'id', '\entities\Pagination');
@@ -50,7 +50,7 @@ class OldTextWebsite implements \classes\Website
     {
         $controllers = [
             'originaltext' => new \controllers\OriginalTextController($this->placesTable, $this->languageTable, $this->originalTextTable, $this->translatedTextTable,
-            $this->paginationTable, $this->authentication),
+            $this->paginationTable, $this->authentication, $this->authorsTable),
             'translatedtext' => new \controllers\TranslatedTextController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
             $this->authorsTable),
             'author' => new \controllers\AuthorController($this->authorsTable),
@@ -58,7 +58,7 @@ class OldTextWebsite implements \classes\Website
             'pagination' => new \controllers\PaginationController($this->paginationTable),
             'statistic' => new \controllers\StatisticController($this->translatedTextTable, $this->originalTextTable),
             'originaltextapi' => new \controllers\api\OriginalTextApiController($this->placesTable, $this->languageTable, $this->originalTextTable,$this->paginationTable, 
-            $this->authentication),
+            $this->authentication, $this->authorsTable),
             'translatedtextapi' => new \controllers\api\TranslatedTextApiController($this->translatedTextTable, $this->originalTextTable,$this->paginationTable, 
             $this->authorsTable)
           ];

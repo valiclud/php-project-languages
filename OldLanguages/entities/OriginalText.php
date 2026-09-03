@@ -25,11 +25,15 @@ class OriginalText
 
     public $old_language_id;
 
+    public $author_id; 
+
     public ?object $place = null;
 
     public ?object $oldLanguage = null;
 
-    public static function default($placesTable, $oldLanguagesTable): self
+    private ?object $author;
+
+    public static function default($placesTable, $oldLanguagesTable, $authorsTable): self
     {
         return self::from(
             "",
@@ -42,7 +46,8 @@ class OriginalText
             Place::from(0, "", ""),
             OldLanguage::from(0, "", ""),
             $placesTable,
-            $oldLanguagesTable
+            $oldLanguagesTable,
+            $authorsTable
         );
     }
 
@@ -57,9 +62,10 @@ class OriginalText
         ?Place $place,
         ?OldLanguage $oldLanguage,
         \classes\DatabaseTable $placesTable,
-        \classes\DatabaseTable $oldLanguagesTable
+        \classes\DatabaseTable $oldLanguagesTable,
+        \classes\DatabaseTable $authorsTable
     ) {
-        $instance = new self($placesTable, $oldLanguagesTable);
+        $instance = new self($placesTable, $oldLanguagesTable, $authorsTable);
         $instance->author_text = $author;
         $instance->title = $title;
         $instance->text = $text;
@@ -73,14 +79,17 @@ class OriginalText
         return $instance;
     }
 
-    public function __construct(private \classes\DatabaseTable $placesTable, private \classes\DatabaseTable $oldLanguagesTable)
+    public function __construct(
+        private \classes\DatabaseTable $placesTable,
+        private \classes\DatabaseTable $oldLanguagesTable,
+        private \classes\DatabaseTable $authorsTable)
     {
     }
-    public function setAuthor(String $author): void
+    public function setAuthorText(String $author_text): void
     {
-        $this->author_text = $author;
+        $this->author_text = $author_text;
     }
-    public function getAuthor() {
+    public function getAuthorText() {
         return $this->author_text;
     }
     public function setTitle(String $title): void
@@ -135,7 +144,6 @@ $       $this->place = $place;
         }
         return $this->place;
     }
-
     public function getAllPlaces()
     {
         return $this->placesTable->findAll();
@@ -153,5 +161,16 @@ $       $this->place = $place;
     public function getAllOldLanguages()
     {
         return $this->oldLanguagesTable->findAll();
+    }
+    public function getAuthor()
+    {
+        if (empty($this->author)) {
+            $this->author = $this->authorsTable->find('id', $this->author_id)[0];
+        }
+        return $this->author;
+    }
+    public function getAllAuthors()
+    {
+        return $this->authorsTable->findAll();
     }
 }

@@ -13,7 +13,8 @@ class OriginalTextApiController extends BaseApiController
 		private \classes\DatabaseTable $languageTable,
 		private \classes\DatabaseTable $originalTextTable,
 		private \classes\DatabaseTable $paginationTable,
-		private \classes\Authentication $authentication
+		private \classes\Authentication $authentication,
+		private \classes\DatabaseTable $authorsTable
 	) {
 	}
 
@@ -25,7 +26,7 @@ class OriginalTextApiController extends BaseApiController
 	}
 
 	public function list(?int $page = 1)
-	{
+	{	
 		$pagination = $this->paginationTable->find('controller_name', 'apiOriginalTextController')[0];
 		if ($pagination == null) {
 			$message = 'Record column controller_name -> "apiOriginalTextController" is not stored in database table pagination
@@ -53,7 +54,7 @@ class OriginalTextApiController extends BaseApiController
 		if (isset($id) && $id != "") {
 			$originalText = $this->originalTextTable->find('id', $id)[0] ?? null;
 		} else {
-			$originalText = new OriginalText($this->placesTable, $this->languageTable);
+			$originalText = new OriginalText($this->placesTable, $this->languageTable, $this->authorsTable);
 		}
 
 		$data = array("data" => $originalText);
