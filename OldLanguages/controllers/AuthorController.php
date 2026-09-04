@@ -5,7 +5,7 @@ class AuthorController {
 	public function __construct(private \classes\DatabaseTable $authorsTable) {
     }
 
-    public function registrationForm() {
+    public function registrationForm():array {
         return [
           'template' => 'register.html.php',
             'title' => 'Register an account'
