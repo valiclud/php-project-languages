@@ -57,17 +57,21 @@ class OriginalTextController
 
 	public function edit($id = null)
 	{
-		if (isset($id)) {
-			$originaltext = $this->originalTextTable->find('id', $id)[0] ?? null;
+		if (!$this->authentication->isLoggedIn()) {
+			return [
+				'template' => 'error.html',
+				'title' => 'You are not authorized to view this page'
+			];
 		} else {
-			$originaltext = null;
+			if (isset($id)) {
+				$originaltext = $this->originalTextTable->find('id', $id)[0] ?? null;
+			} else {
+				$originaltext = null;
+			}
 		}
-
-		$title = 'Edit Original Text';
-
 		return [
 			'template' => 'editoriginaltext.html.php',
-			'title' => $title,
+			'title' => 'Edit Original Text',
 			'variables' => [
 				'originalText' => $originaltext
 			]
