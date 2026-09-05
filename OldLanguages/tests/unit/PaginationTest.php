@@ -33,8 +33,18 @@ final class PaginationTest extends TestCase
 
     public function test_default_pagination(): void
     {
+        $this->assertSame(0, $this->pagination->id);
         $this->assertSame("", $this->pagination->controller_name);
         $this->assertSame(5, $this->pagination->results);
+    }
+
+    public function test_from_creates_custom_pagination(): void
+    {
+        $pagination = Pagination::from(12, 'originaltextController', 25);
+
+        $this->assertSame(12, $pagination->id);
+        $this->assertSame('originaltextController', $pagination->controller_name);
+        $this->assertSame(25, $pagination->results);
     }
 
     protected function tearDown(): void

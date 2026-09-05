@@ -25,14 +25,15 @@ final class OriginalTextTest extends TestCase
             $pdo = new \PDO('mysql:host=localhost:3306;dbname=old_languages;charset=utf8mb4', 'root', 'lukasa');
             $this->placesTable = new DatabaseTable($pdo, 'place', 'id', '\entities\Place');
             $this->languageTable = new DatabaseTable($pdo, 'old_language', 'id', '\entities\OldLanguage');
-            $this->originalTextTable = new DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable]);
+            $this->authorsTable = new DatabaseTable($pdo, 'author', 'id', '\entities\Author');
+            $this->originalTextTable = new DatabaseTable($pdo, 'original_text', 'id', '\entities\OriginalText', [&$this->placesTable, &$this->languageTable, &$this->authorsTable]);
         } catch (\PDOException $e) {
             error_log($e->getMessage());
             echo "$e";
             throw new \PDOException($e);
         }
 
-        $this->originalText = OriginalText::default($this->placesTable, $this->languageTable);
+        $this->originalText = OriginalText::default($this->placesTable, $this->languageTable, $this->authorsTable);
     }
 
     public function test_default_original_text(): void
@@ -64,7 +65,7 @@ final class OriginalTextTest extends TestCase
     {
         $author = "Cicero";
 
-        $this->originalText->setAuthor($author);
+        $this->originalText->setAuthorText($author);
 
         $this->assertSame($author, $this->originalText->author_text);
     }
