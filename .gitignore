@@ -9,5 +9,5 @@ FrontEnd/tsconfig*
 *.png
 *.json
 FrontEnd/eslint.config.js
-FrontEnd/vite.config.js
+FrontEnd/vite.config.ts
 

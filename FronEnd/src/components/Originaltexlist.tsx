@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { DataGrid, type GridColDef } from "@mui/x-data-grid";
 import type { OriginalTextResponse } from "../types/types";
 import { getOriginaltexts } from "../api/originaltextapi";
 
@@ -7,28 +8,23 @@ function getOriginaltextlist() {
     queryKey: ["originaltexts"],
     queryFn: getOriginaltexts,
   });
+  const columns: GridColDef[] = [
+    { field: "author_text", headerName: "Author Text", width: 200 },
+    { field: "title", headerName: "Title", width: 200 },
+    { field: "text_img", headerName: "Text Image", width: 200 },
+    { field: "inser_date", headerName: "Insert Date", width: 150 },
+    { field: "hits", headerName: "Hits", width: 150 },
+    { field: "place_id", headerName: "Place Id", width: 150 },
+    { field: "old_language_id", headerName: "Old Language Id", width: 150 },
+    { field: "author_id", headerName: "Translation Author Id", width: 150 },
+  ];
   if (!isSuccess) {
     return <span>Loading...</span>;
   } else if (error) {
     return <span>Error when fetching texts...</span>;
   } else {
     return (
-      <table>
-        <tbody>
-          {data.map((text: OriginalTextResponse) => (
-            <tr key={text.id}>
-              <td>{text.author_text}</td>
-              <td>{text.title}</td>
-              <td>{text.text_img}</td>
-              <td>{text.insert_date}</td>
-              <td>{text.hits}</td>
-              <td>{text.place_id}</td>
-              <td>{text.old_language_id}</td>
-              <td>{text.author_id}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <DataGrid rows={data} columns={columns} getRowId={(row) => row.id} />
     );
   }
 }
