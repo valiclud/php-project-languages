@@ -3,3 +3,11 @@ OldLanguages/composer.lock
 OldLanguages/.phpunit.result.cache
 composer*
 phpunit.phar
+#React
+FrontEnd/tsconfig*
+*.svg
+*.png
+*.json
+FrontEnd/eslint.config.js
+FrontEnd/vite.config.js
+
