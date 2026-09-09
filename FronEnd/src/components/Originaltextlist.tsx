@@ -7,8 +7,9 @@ import {
 } from "@mui/x-data-grid";
 import { getOriginaltexts, deleteOriginaltext } from "../api/originaltextapi";
 import Snackbar from "@mui/material/Snackbar";
+import AddOriginaltext from "./AddOriginaltext";
 
-function getOriginaltextlist() {
+function GetOriginaltextlist() {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const { data, error, isSuccess } = useQuery({
@@ -27,9 +28,10 @@ function getOriginaltextlist() {
   });
   const columns: GridColDef[] = [
     { field: "author_text", headerName: "Author Text", width: 200 },
+    { field: "text", headerName: "Text", width: 200 },
     { field: "title", headerName: "Title", width: 200 },
     { field: "text_img", headerName: "Text Image", width: 200 },
-    { field: "inser_date", headerName: "Insert Date", width: 150 },
+    { field: "insert_date", headerName: "Insert Date", width: 150 },
     { field: "hits", headerName: "Hits", width: 150 },
     { field: "place_id", headerName: "Place Id", width: 150 },
     { field: "old_language_id", headerName: "Old Language Id", width: 150 },
@@ -46,7 +48,7 @@ function getOriginaltextlist() {
           onClick={() => {
             if (
               window.confirm(
-                `Are you sure you want to delete ${params.row.title} ?`,
+                `Are you sure you want to delete ${params.row.origtexttitle} ?`,
               )
             ) {
               mutate(params.row.id);
@@ -65,6 +67,7 @@ function getOriginaltextlist() {
   } else {
     return (
       <>
+        <AddOriginaltext />
         <DataGrid rows={data} columns={columns} getRowId={(row) => row.id} />
         <Snackbar
           open={open}
@@ -76,4 +79,4 @@ function getOriginaltextlist() {
     );
   }
 }
-export default getOriginaltextlist;
+export default GetOriginaltextlist;
