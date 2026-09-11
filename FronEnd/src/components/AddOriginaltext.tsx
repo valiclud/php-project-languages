@@ -3,9 +3,9 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addOriginaltext } from "../api/originaltextapi";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import type { OriginalText } from "../types/types";
+import OriginaltextDialogContent from "./OriginaltextDialogContent";
 
 function AddOriginaltext() {
   const [open, setOpen] = useState(false);
@@ -62,64 +62,10 @@ function AddOriginaltext() {
       <button onClick={handleClickOpen}>New Original Text</button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Original Text</DialogTitle>
-        <DialogContent>
-          <input
-            placeholder="Author"
-            name="origtextauthor"
-            value={originaltext.origtextauthor}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Title"
-            name="origtexttitle"
-            value={originaltext.origtexttitle}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Text"
-            name="origtexttext"
-            value={originaltext.origtexttext}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Image"
-            name="origtextimage"
-            value={originaltext.origtextimage}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Century"
-            name="origtextcentury"
-            value={originaltext.origtextcentury}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Place Id"
-            name="idplace"
-            value={originaltext.idplace}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Old Language Id"
-            name="idlanguage"
-            value={originaltext.idlanguage}
-            onChange={handleChange}
-          />
-          <br />
-          <input
-            placeholder="Author Id"
-            name="idauthor"
-            value={originaltext.idauthor}
-            onChange={handleChange}
-          />
-          <br />
-        </DialogContent>
+        <OriginaltextDialogContent
+          originaltext={originaltext}
+          handleChange={handleChange}
+        />
         <DialogActions>
           <button onClick={handleClose}>Cancel</button>
           <button onClick={handleSave}>Save</button>
