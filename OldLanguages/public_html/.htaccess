@@ -2,9 +2,11 @@
    Options +FollowSymLinks -MultiViews
    RewriteEngine On
    RewriteBase /
+   RewriteRule ^api/(.*)$ api.php [L,QSA,NC]
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteCond %{REQUEST_FILENAME} !-d
-   RewriteRule ^(.+)$ /index.php/$1 [L,QSA]
+  # RewriteRule ^(.+)$ /index.php/$1 [L,QSA]
+   RewriteRule ^(.*)$ index.php [L,QSA] 
 </IfModule>
 
 <IfModule mod_headers.c>

@@ -1,8 +1,8 @@
 <?php
 
-namespace classes;
+namespace classes\api;
 
-class OldTextWebsite implements \classes\Website
+class OldTextWebsiteApi implements \classes\Website
 {
 
     private ?\classes\DatabaseTable $originalTextTable;
@@ -43,30 +43,26 @@ class OldTextWebsite implements \classes\Website
 
     public function getDefaultRoute(): string
     {
-        return 'originaltext/home';
+        return 'api/originaltextapi';
     }
 
     public function getController(string $controllerName): ?object
     {
         $controllers = [
-            'originaltext' => new \controllers\OriginalTextController(
+            'originaltextapi' => new \controllers\api\OriginalTextApiController(
                 $this->placesTable,
                 $this->languageTable,
                 $this->originalTextTable,
-                $this->translatedTextTable,
                 $this->paginationTable,
                 $this->authentication,
                 $this->authorsTable
             ),
-            'translatedtext' => new \controllers\TranslatedTextController(
+            'translatedtextapi' => new \controllers\api\TranslatedTextApiController(
                 $this->translatedTextTable,
                 $this->originalTextTable,
                 $this->paginationTable,
                 $this->authorsTable
-            ),
-            'author' => new \controllers\AuthorController($this->authorsTable),
-            'login' => new \controllers\LoginController($this->authentication),
-            'pagination' => new \controllers\PaginationController($this->paginationTable),
+            )
         ];
         return $controllers[$controllerName] ?? null;
     }

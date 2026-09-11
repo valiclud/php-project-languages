@@ -1,8 +1,8 @@
 <?php
 
-namespace classes;
+namespace classes\api;
 
-class EntryPoint
+class EntryPointApi
 {
     public function __construct(private \classes\Website $website) {}
 
@@ -10,12 +10,12 @@ class EntryPoint
     {
         try {
             $this->checkUri($uri);
-            if ($uri == '' || $uri == 'originaltext') {
+            if ($uri == 'api') {
                 $uri = $this->website->getDefaultRoute();
             }
 
             $route = explode('/', $uri);
-
+            array_shift($route);
             $controllerName = array_shift($route);
             $action = array_shift($route);
 
@@ -24,13 +24,8 @@ class EntryPoint
             }
 
             $controller = $this->website->getController($controllerName);
-
             if (is_callable([$controller, $action])) {
                 $page = $controller->$action(...$route);
-                $title = $page['title'];
-                $variables = $page['variables'] ?? [];
-
-                $output = $this->loadTemplate($page['template'], $variables);
             } else {
                 http_response_code(404);
                 $title = 'Not found';
@@ -42,22 +37,6 @@ class EntryPoint
             $output = 'Database error: ' . $e->getMessage() . ' in ' .
                 $e->getFile() . ':' . $e->getLine();
         }
-
-        $layoutVariables = $this->website->getLayoutVariables();
-        $layoutVariables['title'] = $title;
-        $layoutVariables['output'] = $output;
-
-        echo $this->loadTemplate('layout.html.php', $layoutVariables);
-    }
-
-    private function loadTemplate(string $templateFileName, array $variables): string
-    {
-        extract($variables);
-
-        ob_start();
-        include  __DIR__ . '/../templates/' . $templateFileName;
-
-        return ob_get_clean();
     }
 
     private function checkUri(string $uri): void
