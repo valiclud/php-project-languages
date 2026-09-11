@@ -4,10 +4,10 @@ OldLanguages/.phpunit.result.cache
 composer*
 phpunit.phar
 #React
-FrontEnd/tsconfig*
+FronEnd/tsconfig*
 *.svg
 *.png
 *.json
-FrontEnd/eslint.config.js
-FrontEnd/vite.config.ts
+FronEnd/eslint.config.js
+FronEnd/vite.config.ts
 
