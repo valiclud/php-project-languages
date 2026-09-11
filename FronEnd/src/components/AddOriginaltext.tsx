@@ -34,11 +34,10 @@ function AddOriginaltext() {
     });
   };
   const queryClient = useQueryClient();
-  // Add inside the AddCar component function
   const { mutate } = useMutation({
     mutationFn: addOriginaltext,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["originaltext"] });
+      queryClient.invalidateQueries({ queryKey: ["originaltexts"] });
     },
     onError: (err) => {
       console.error(err);
