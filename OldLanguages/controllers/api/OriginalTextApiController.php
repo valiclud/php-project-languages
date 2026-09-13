@@ -24,12 +24,16 @@ class OriginalTextApiController extends BaseApiController
 		return null;
 	}
 
-	public function list(?int $page = 1)
+	public function list(?int $page = 1): void
 	{
-		$pagination = $this->paginationTable->find('controller_name', 'apiOriginalTextController')[0];
-		if ($pagination == null) {
-			$message = 'Record column controller_name -> "apiOriginalTextController" is not stored in database table pagination
-			default value pagination=5 is to be set.';
+		$page = $page ?? 1;
+
+		$paginationResult = $this->paginationTable->find('controller_name', 'apiOriginalTextController');
+		$pagination = (!empty($paginationResult) && isset($paginationResult[0])) ? $paginationResult[0] : null;
+
+		if ($pagination === null) {
+			$message = 'Record column controller_name -> "apiOriginalTextController" is not stored in database table pagination. Default value pagination=5 is to be set.';
+
 			$pagination = Pagination::default();
 			error_log($message);
 		}
@@ -38,19 +42,36 @@ class OriginalTextApiController extends BaseApiController
 		$offset = ($page - 1) * $limit;
 		$originalTexts = $this->originalTextTable->findAll($limit, $offset);
 		$totaloriginalTexts = $this->originalTextTable->total();
-		$totalPages = ceil($totaloriginalTexts / $pagination->results);
+		$totalPages = $limit > 0 ? (int)ceil($totaloriginalTexts / $limit) : 1;
+
+		$sanitizedRows = array_map(function ($row) {
+			$data = (array)$row;
+
+			return [
+				'id' => (int)($data['id'] ?? 0),
+				'origtextauthor' => htmlspecialchars($data['author_text'] ?? '', ENT_QUOTES, 'UTF-8'),
+				'origtexttext' => htmlspecialchars($data['text'] ?? '', ENT_QUOTES, 'UTF-8'),
+				'origtexttitle' => htmlspecialchars($data['title'] ?? '', ENT_QUOTES, 'UTF-8'),
+				'origtextimage' => htmlspecialchars($data['text_img'] ?? '', ENT_QUOTES, 'UTF-8'),
+				'origtextcentury' => (int)($data['century'] ?? 0),
+				'origtextdate' => htmlspecialchars($data['insert_date'] ?? '', ENT_QUOTES, 'UTF-8'),
+				'hits' => (int)($data['hits'] ?? 0),
+				'idplace' => (int)($data['place_id'] ?? 0),
+				'idlanguage' => (int)($data['language_id'] ?? 0),
+				'idauthor' => (int)($data['author_id'] ?? 0)
+			];
+		}, $originalTexts ?: []);
+
 		$data = array(
 			"total" => $totaloriginalTexts,
 			"total_pages" => $totalPages,
 			"per_page" => $pagination->results,
 			"page_number" => $page,
-			"data" => $originalTexts
+			"data" => $sanitizedRows
 		);
 		$responseData = json_encode($data);
 
-		$this->sendOutput($responseData, array("Content-Type: application/json", "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
-
-		return null;
+		$this->sendOutput($responseData, ["Content-Type: application/json", "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"]);
 	}
 
 	public function get($id = null)
@@ -150,13 +171,14 @@ class OriginalTextApiController extends BaseApiController
 		header("Content-Type: application/json; charset=UTF-8");
 		header("Access-Control-Allow-Methods: PUT");
 		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-
+		/*
 		// Ochrana: Povolíme pouze metodu PUT
 		if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') {
 			http_response_code(405);
 			echo json_encode(["message" => "Metoda není povolena. Použijte PUT."]);
 			exit;
 		}
+			*/
 		$inputData = json_decode(file_get_contents("php://input"), true);
 
 		// 3. Definice vašich povinných polí
