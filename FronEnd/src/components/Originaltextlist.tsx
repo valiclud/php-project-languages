@@ -8,6 +8,7 @@ import {
 import { getOriginaltexts, deleteOriginaltext } from "../api/originaltextapi";
 import Snackbar from "@mui/material/Snackbar";
 import AddOriginaltext from "./AddOriginaltext";
+import EditOriginaltext from "./EditOriginaltext";
 
 function GetOriginaltextlist() {
   const [open, setOpen] = useState(false);
@@ -27,15 +28,27 @@ function GetOriginaltextlist() {
     },
   });
   const columns: GridColDef[] = [
-    { field: "author_text", headerName: "Author Text", width: 200 },
+    { field: "author_text", headerName: "Author Text", width: 150 },
     { field: "text", headerName: "Text", width: 200 },
-    { field: "title", headerName: "Title", width: 200 },
-    { field: "text_img", headerName: "Text Image", width: 200 },
-    { field: "insert_date", headerName: "Insert Date", width: 150 },
-    { field: "hits", headerName: "Hits", width: 150 },
-    { field: "place_id", headerName: "Place Id", width: 150 },
+    { field: "title", headerName: "Title", width: 150 },
+    { field: "text_img", headerName: "Text Image", width: 100 },
+    { field: "century", headerName: "Century", width: 100 },
+    { field: "insert_date", headerName: "Insert Date", width: 100 },
+    { field: "hits", headerName: "Hits", width: 100 },
+    { field: "place_id", headerName: "Place Id", width: 100 },
     { field: "old_language_id", headerName: "Old Language Id", width: 150 },
     { field: "author_id", headerName: "Translation Author Id", width: 150 },
+    {
+      field: "edit",
+      headerName: "",
+      width: 90,
+      sortable: false,
+      filterable: false,
+      disableColumnMenu: true,
+      renderCell: (params: GridCellParams) => (
+        <EditOriginaltext originaltextdata={params.row} />
+      ),
+    },
     {
       field: "delete",
       headerName: "",

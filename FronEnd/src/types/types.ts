@@ -1,11 +1,13 @@
 export type OriginalTextResponse = {
   id: number;
-  author: string;
+  origtextauthor: string;
   origtexttitle: string;
+  origtexttext: string;
   origtextimage: string;
+  origtextcentury: number;
   insert_date: string;
   hits: number;
-  place_id: number;
+  idplace: number;
   idlanguage: number;
   idauthor:number
 }
@@ -19,4 +21,9 @@ export type OriginalText = {
   idplace: number;
   idlanguage: number;
   idauthor:number
+}
+
+export type OriginaltextEntry = {
+  originaltext: OriginalText;
+  url: string;
 }

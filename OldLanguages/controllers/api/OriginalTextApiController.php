@@ -85,39 +85,6 @@ class OriginalTextApiController extends BaseApiController
 			http_response_code(200);
 			exit();
 		}
-		/*dat do hlavicky:
-		Accept: application/json
-Access-Control-Allow-Origin: *
-Access-Control-Allow-Headers: *
-*/
-		/*
-		echo "User name: ".$_POST['key'];
-		echo file_get_contents('php://input');
-		echo $_POST;
-
-		$data = json_decode( file_get_contents('php://input') );
-		$originalTexts = $this->originalTextTable->findAll(3, 3);
-		$totaloriginalTexts = $this->originalTextTable->total();
-		$totalPages = ceil($totaloriginalTexts / 3);
-		$data = array("total" => $totaloriginalTexts, "total_pages" => $totalPages, "per_page" => 3, 
-			"page_number" => 3, "da$origText['place_id'] = $post['idplace'];ta" => $originalTexts);
-		$responseData = json_encode($data);
-
-		//$this->sendOutput(null, array('Content-Type: application/json', "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
-		$this->sendOutput($responseData, array('Content-Type: application/json',  "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
-      	*/
-		/*
-        if (! $this->validatePerson($input)) {
-            return $this->unprocessableEntityResponse();
-        }
-      
-        $this->personGateway->insert($input);
-        $response['status_code_header'] = 'HTTP/1.1 201 Created';
-        $response['body'] = null;
-        return $response;$post = json_decode(file_get_contents('php://input'), true);
-    $user->username = $post['username'];
-    echo json_encode($user);
-        */
 	}
 	// curl.exe -X POST http://localhost/originaltextapi/post -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
 
@@ -172,6 +139,77 @@ Access-Control-Allow-Headers: *
 		$id = $this->originalTextTable->save($originalText);
 		http_response_code(201);
 		$data = array("data" => $id);
+		$responseData = json_encode($data);
+		$this->sendOutput($responseData, array('Content-Type: application/json',  "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
+	}
+
+	// curl.exe -X PUT http://localhost/api/originaltextapi/update -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"idorigtext\":61,\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
+	public function update($id = null, $array = null)
+	{
+		header("Access-Control-Allow-Origin: *");
+		header("Content-Type: application/json; charset=UTF-8");
+		header("Access-Control-Allow-Methods: PUT");
+		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+
+		// Ochrana: Povolíme pouze metodu PUT
+		if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') {
+			http_response_code(405);
+			echo json_encode(["message" => "Metoda není povolena. Použijte PUT."]);
+			exit;
+		}
+		$inputData = json_decode(file_get_contents("php://input"), true);
+
+		// 3. Definice vašich povinných polí
+		$requiredFields = [
+			'idorigtext',
+			'origtextauthor',
+			'origtexttitle',
+			'origtexttext',
+			'origtextcentury',
+			'idplace',
+			'idlanguage',
+			'idauthor'
+		];
+
+		if (!isset($inputData['idorigtext'])) {
+			http_response_code(400);
+			echo json_encode(["message" => "Chyba: Chybí ID záznamu pro aktualizaci."]);
+			exit;
+		}
+
+		// 4. Validace: Ověření, zda jsou všechna povinná pole přítomna a nejsou prázdná
+		$missingFields = [];
+		foreach ($requiredFields as $field) {
+			if (!isset($inputData[$field]) || trim($inputData[$field]) === '') {
+				$missingFields[] = $field;
+			}
+		}
+		if (!empty($missingFields)) {
+			http_response_code(400);
+			echo json_encode([
+				"message" => "Chyba: Neúplná data.",
+				"missing_fields" => $missingFields
+			]);
+			exit;
+		}
+
+		$originalText = [
+			'id' => (int)$inputData['idorigtext'],
+			'author_text' => htmlspecialchars(strip_tags($inputData['origtextauthor'])),
+			'title' => htmlspecialchars(strip_tags($inputData['origtexttitle'])),
+			'text' => htmlspecialchars(strip_tags($inputData['origtexttext'])),
+			'text_img' => isset($inputData['origtextimage']) ? htmlspecialchars(strip_tags($inputData['origtextimage'])) : null,
+			'century' => htmlspecialchars(strip_tags($inputData['origtextcentury'])),
+			'insert_date' => date_create()->format('Y-m-d'),
+			'hits' => 2,
+			'place_id' => (int)$inputData['idplace'],
+			'old_language_id' => (int) $inputData['idlanguage'],
+			'author_id' => (int) $inputData['idauthor']
+		];
+
+		$this->originalTextTable->update($originalText);
+		http_response_code(201);
+		$data = (int)$inputData['idorigtext'];
 		$responseData = json_encode($data);
 		$this->sendOutput($responseData, array('Content-Type: application/json',  "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
 	}
