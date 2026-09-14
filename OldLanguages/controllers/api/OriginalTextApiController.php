@@ -89,43 +89,11 @@ class OriginalTextApiController extends BaseApiController
 		return null;
 	}
 
-	public function post($id = null, $array = null)
-	{
-		// 1. Povolte doménu, ze které běží váš React (Vite)
-		header("Access-Control-Allow-Origin: http://localhost:5173");
-
-		// 2. Klíčový krok: Povolte hlavičku Content-Type, kterou požaduje Axios
-		header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-
-		// 3. Povolte metody, které přes API přijímáte
-		header("Access-Control-Allow-Methods: POST, GET, OPTIONS, DELETE");
-
-		// 4. Zpracování předběžného dotazu (Preflight/OPTIONS)
-		// Prohlížeč se nejdříve zeptá metodou OPTIONS. Pokud přijde, musíme ihned vrátit status 200 a ukončit skript.
-		if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-			http_response_code(200);
-			exit();
-		}
-	}
+	public function post($id = null, $array = null) {}
 	// curl.exe -X POST http://localhost/originaltextapi/post -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
 
 	public function postSubmit()
 	{
-		// 1. Tyto hlavičky musí být odeslány VŽDY – jak pro OPTIONS, tak pro POST/GET
-		header('Access-Control-Allow-Origin: *');
-		header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
-		header('Access-Control-Allow-Headers: token, Content-Type, Authorization, X-Requested-With');
-
-		// 2. Ošetření preflight (OPTIONS) požadavku
-		if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-			header('Content-Type: text/plain');
-			http_response_code(200); // explicitně řekneme, že preflight je OK
-			exit(0);
-		}
-
-		// 3. Nastavení pro běžné požadavky (POST, GET atd.)
-		header('Content-Type: application/json');
-
 		$post = json_decode(file_get_contents('php://input'), true);
 		$requiredFields = [
 			'origtextauthor',
@@ -167,18 +135,6 @@ class OriginalTextApiController extends BaseApiController
 	// curl.exe -X PUT http://localhost/api/originaltextapi/update -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"idorigtext\":61,\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
 	public function update($id = null, $array = null)
 	{
-		header("Access-Control-Allow-Origin: *");
-		header("Content-Type: application/json; charset=UTF-8");
-		header("Access-Control-Allow-Methods: PUT");
-		header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
-		/*
-		// Ochrana: Povolíme pouze metodu PUT
-		if ($_SERVER['REQUEST_METHOD'] !== 'PUT' && $_SERVER['REQUEST_METHOD'] !== 'PATCH') {
-			http_response_code(405);
-			echo json_encode(["message" => "Metoda není povolena. Použijte PUT."]);
-			exit;
-		}
-			*/
 		$inputData = json_decode(file_get_contents("php://input"), true);
 
 		// 3. Definice vašich povinných polí
