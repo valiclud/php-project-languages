@@ -11,6 +11,13 @@ function OriginaltextDialogContent({
   return (
     <DialogContent>
       <input
+        placeholder="ID"
+        name="idorigtext"
+        value={originaltext.idorigtext}
+        onChange={handleChange}
+      />
+      <br />
+      <input
         placeholder="Author"
         name="origtextauthor"
         value={originaltext.origtextauthor}

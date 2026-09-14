@@ -1,5 +1,6 @@
-import type { OriginalTextResponse, OriginalText, OriginaltextEntry } from "../types/types";
+import type { OriginalTextResponse, OriginalText } from "../types/types";
 import axios from 'axios';
+
 export const getOriginaltexts = async (): Promise<OriginalTextResponse[]> => 
 {
   const response = await axios.get(`http://localhost/api/originaltextapi/list`);
@@ -21,9 +22,8 @@ export const addOriginaltext = async (originaltext: OriginalText): Promise<Origi
   return response.data.data;
 }
 
-export const updateOriginaltext = async (originaltextEntry: OriginaltextEntry):
-  Promise<OriginalTextResponse> => {
-  const response = await axios.put(originaltextEntry.url, originaltextEntry.originaltext, {
+export const updateOriginaltext = async (originaltext: OriginalText): Promise<OriginalTextResponse> => {
+  const response = await axios.put(`http://localhost/api/originaltextapi/update/`, originaltext, {
     headers: {
       'Content-Type': 'application/json'
     },

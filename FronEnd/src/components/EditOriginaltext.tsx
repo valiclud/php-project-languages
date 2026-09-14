@@ -4,51 +4,62 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { useState, type ChangeEvent } from "react";
 import OriginaltextDialogContent from "./OriginaltextDialogContent";
 import { type OriginalText, type OriginalTextResponse } from "../types/types";
+import { updateOriginaltext } from "../api/originaltextapi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type FormProps = {
   originaltextdata: OriginalTextResponse;
+};
+
+const toNumber = (value: unknown, fallback = 0) => {
+  const parsed = Number(value);
+  return Number.isFinite(parsed) ? parsed : fallback;
 };
 
 function EditOriginaltext({ originaltextdata }: FormProps) {
   const [open, setOpen] = useState(false);
 
   const [originaltext, setOriginalText] = useState<OriginalText>({
-    origtextauthor: originaltextdata.origtextauthor,
-    origtexttitle: originaltextdata.origtexttitle,
-    origtexttext: originaltextdata.origtexttext,
-    origtextimage: originaltextdata.origtextimage,
-    origtextcentury: originaltextdata.origtextcentury,
-    idplace: originaltextdata.idplace,
-    idlanguage: originaltextdata.idlanguage,
-    idauthor: originaltextdata.idauthor,
+    idorigtext: toNumber(originaltextdata.idorigtext ?? 0),
+    origtextauthor: originaltextdata.origtextauthor ?? "",
+    origtexttitle: originaltextdata.origtexttitle ?? "",
+    origtexttext: originaltextdata.origtexttext ?? "",
+    origtextimage: originaltextdata.origtextimage ?? "",
+    origtextcentury: toNumber(originaltextdata.origtextcentury ?? 0),
+    idplace: toNumber(originaltextdata.idplace ?? 0),
+    idlanguage: toNumber(originaltextdata.idlanguage ?? 0),
+    idauthor: toNumber(originaltextdata.idauthor ?? 0),
   });
 
   const handleClickOpen = () => {
     setOriginalText({
-      origtextauthor: originaltextdata.origtextauthor,
-      origtexttitle: originaltextdata.origtexttitle,
-      origtexttext: originaltextdata.origtexttext,
-      origtextimage: originaltextdata.origtextimage,
-      origtextcentury: originaltextdata.origtextcentury,
-      idplace: originaltextdata.idplace,
-      idlanguage: originaltextdata.idlanguage,
-      idauthor: originaltextdata.idauthor,
+      idorigtext: toNumber(originaltextdata.idorigtext ?? 0),
+      origtextauthor: originaltextdata.origtextauthor ?? "",
+      origtexttitle: originaltextdata.origtexttitle ?? "",
+      origtexttext: originaltextdata.origtexttext ?? "",
+      origtextimage: originaltextdata.origtextimage ?? "",
+      origtextcentury: toNumber(originaltextdata.origtextcentury ?? 0),
+      idplace: toNumber(originaltextdata.idplace ?? 0),
+      idlanguage: toNumber(originaltextdata.idlanguage ?? 0),
+      idauthor: toNumber(originaltextdata.idauthor ?? 0),
     });
     setOpen(true);
   };
 
+  const numericFields = new Set([
+    "idorigtext",
+    "origtextcentury",
+    "idplace",
+    "idlanguage",
+    "idauthor",
+  ]);
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setOriginalText({
-      ...originaltext,
-      [name]:
-        name === "origtextcentury" ||
-        name === "idplace" ||
-        name === "idlanguage" ||
-        name === "idauthor"
-          ? Number(value)
-          : value,
-    });
+    setOriginalText((prev) => ({
+      ...prev,
+      [name]: numericFields.has(name) ? Number(value) : value,
+    }));
   };
 
   const handleClose = () => {
@@ -56,8 +67,33 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
   };
 
   const handleSave = () => {
+    mutate(originaltext);
+    setOriginalText({
+      // idorigtext: originaltext.idorigtext,
+      idorigtext: 0,
+      origtextauthor: "",
+      origtexttitle: "",
+      origtexttext: "",
+      origtextimage: "",
+      origtextcentury: 0,
+      idplace: 0,
+      idlanguage: 0,
+      idauthor: 0,
+    });
     setOpen(false);
   };
+  // Get query client
+  const queryClient = useQueryClient();
+  // Use useMutation hook
+  const { mutate } = useMutation({
+    mutationFn: updateOriginaltext,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["originaltexts"] });
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
 
   return (
     <>
