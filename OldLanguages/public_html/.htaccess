@@ -3,21 +3,9 @@
    RewriteEngine On
    RewriteBase /
    RewriteRule ^api/(.*)$ api.php [L,QSA,NC]
+   
    RewriteCond %{REQUEST_FILENAME} !-f
    RewriteCond %{REQUEST_FILENAME} !-d
   # RewriteRule ^(.+)$ /index.php/$1 [L,QSA]
    RewriteRule ^(.*)$ index.php [L,QSA] 
 </IfModule>
-
-<IfModule mod_headers.c>
-    # Povolení React frontendu (http://localhost:5173)
-    Header set Access-Control-Allow-Origin "http://localhost:5173"
-    Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
-    Header set Access-Control-Allow-Headers "Content-Type, Authorization, X-Requested-With"
-    Header set Access-Control-Allow-Credentials "true"
-
-    # Zde je klíčová část: Pokud jde o metodu OPTIONS, Apache ihned odpoví 200 OK
-    RewriteEngine On
-    RewriteCond %{REQUEST_METHOD} OPTIONS
-    RewriteRule ^(.*)$ $1 [R=200,L]
- </IfModule>
