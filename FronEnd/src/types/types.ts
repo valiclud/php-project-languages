@@ -19,11 +19,8 @@ export type OriginalText = {
   origtexttext: string;
   origtextimage?: string;
   origtextcentury: number;
+  hits?: number;
   idplace: number;
   idlanguage: number;
   idauthor:number
-}
-
-export type OriginaltextEntry = {
-  originaltext: OriginalText;
 }

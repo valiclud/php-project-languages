@@ -48,7 +48,7 @@ class OriginalTextApiController extends BaseApiController
 			$data = (array)$row;
 
 			return [
-				'id' => (int)($data['id'] ?? 0),
+				'idorigtext' => (int)($data['id'] ?? 0),
 				'origtextauthor' => htmlspecialchars($data['author_text'] ?? '', ENT_QUOTES, 'UTF-8'),
 				'origtexttext' => htmlspecialchars($data['text'] ?? '', ENT_QUOTES, 'UTF-8'),
 				'origtexttitle' => htmlspecialchars($data['title'] ?? '', ENT_QUOTES, 'UTF-8'),
@@ -57,7 +57,7 @@ class OriginalTextApiController extends BaseApiController
 				'origtextdate' => htmlspecialchars($data['insert_date'] ?? '', ENT_QUOTES, 'UTF-8'),
 				'hits' => (int)($data['hits'] ?? 0),
 				'idplace' => (int)($data['place_id'] ?? 0),
-				'idlanguage' => (int)($data['language_id'] ?? 0),
+				'idlanguage' => (int)($data['old_language_id'] ?? 0),
 				'idauthor' => (int)($data['author_id'] ?? 0)
 			];
 		}, $originalTexts ?: []);
@@ -179,7 +179,7 @@ class OriginalTextApiController extends BaseApiController
 			'text_img' => isset($inputData['origtextimage']) ? htmlspecialchars(strip_tags($inputData['origtextimage'])) : null,
 			'century' => htmlspecialchars(strip_tags($inputData['origtextcentury'])),
 			'insert_date' => date_create()->format('Y-m-d'),
-			'hits' => 2,
+			'hits' => ((int)$inputData['hits'] + 1),
 			'place_id' => (int)$inputData['idplace'],
 			'old_language_id' => (int) $inputData['idlanguage'],
 			'author_id' => (int) $inputData['idauthor']

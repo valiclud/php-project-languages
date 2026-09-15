@@ -26,6 +26,7 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
     origtexttext: originaltextdata.origtexttext ?? "",
     origtextimage: originaltextdata.origtextimage ?? "",
     origtextcentury: toNumber(originaltextdata.origtextcentury ?? 0),
+    hits: toNumber(originaltextdata.hits ?? 0),
     idplace: toNumber(originaltextdata.idplace ?? 0),
     idlanguage: toNumber(originaltextdata.idlanguage ?? 0),
     idauthor: toNumber(originaltextdata.idauthor ?? 0),
@@ -39,6 +40,7 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
       origtexttext: originaltextdata.origtexttext ?? "",
       origtextimage: originaltextdata.origtextimage ?? "",
       origtextcentury: toNumber(originaltextdata.origtextcentury ?? 0),
+      hits: toNumber(originaltextdata.hits ?? 0),
       idplace: toNumber(originaltextdata.idplace ?? 0),
       idlanguage: toNumber(originaltextdata.idlanguage ?? 0),
       idauthor: toNumber(originaltextdata.idauthor ?? 0),
@@ -69,7 +71,6 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
   const handleSave = () => {
     mutate(originaltext);
     setOriginalText({
-      // idorigtext: originaltext.idorigtext,
       idorigtext: 0,
       origtextauthor: "",
       origtexttitle: "",

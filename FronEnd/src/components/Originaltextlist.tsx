@@ -28,7 +28,7 @@ function GetOriginaltextlist() {
     },
   });
   const columns: GridColDef[] = [
-    { field: "id", headerName: "ID", width: 80 },
+    { field: "idorigtext", headerName: "ID", width: 80 },
     { field: "origtextauthor", headerName: "Author Text", width: 150 },
     { field: "origtexttext", headerName: "Text", width: 200 },
     { field: "origtexttitle", headerName: "Title", width: 150 },
@@ -65,7 +65,7 @@ function GetOriginaltextlist() {
                 `Are you sure you want to delete ${params.row.origtexttitle} ?`,
               )
             ) {
-              mutate(params.row.id);
+              mutate(params.row.idorigtext);
             }
           }}
         >
@@ -82,7 +82,11 @@ function GetOriginaltextlist() {
     return (
       <>
         <AddOriginaltext />
-        <DataGrid rows={data} columns={columns} getRowId={(row) => row.id} />
+        <DataGrid
+          rows={data}
+          columns={columns}
+          getRowId={(row) => row.idorigtext}
+        />
         <Snackbar
           open={open}
           autoHideDuration={2000}
