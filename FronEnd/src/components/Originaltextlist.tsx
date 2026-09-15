@@ -86,6 +86,7 @@ function GetOriginaltextlist() {
           rows={data}
           columns={columns}
           getRowId={(row) => row.idorigtext}
+          showToolbar
         />
         <Snackbar
           open={open}
