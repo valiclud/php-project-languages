@@ -1,6 +1,10 @@
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import EditIcon from "@mui/icons-material/Edit";
+import Tooltip from "@mui/material/Tooltip";
 import { useState, type ChangeEvent } from "react";
 import OriginaltextDialogContent from "./OriginaltextDialogContent";
 import { type OriginalText, type OriginalTextResponse } from "../types/types";
@@ -98,7 +102,11 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
 
   return (
     <>
-      <button onClick={handleClickOpen}>Edit</button>
+      <Tooltip title="Edit Original Text">
+        <IconButton aria-label="edit" size="small" onClick={handleClickOpen}>
+          <EditIcon fontSize="small" />
+        </IconButton>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Edit Original Text</DialogTitle>
         <OriginaltextDialogContent
@@ -106,8 +114,8 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
           handleChange={handleChange}
         />
         <DialogActions>
-          <button onClick={handleClose}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

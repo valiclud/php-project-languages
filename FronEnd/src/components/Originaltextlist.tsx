@@ -5,8 +5,10 @@ import {
   type GridColDef,
   type GridCellParams,
 } from "@mui/x-data-grid";
-import { getOriginaltexts, deleteOriginaltext } from "../api/originaltextapi";
+import IconButton from "@mui/material/IconButton";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Snackbar from "@mui/material/Snackbar";
+import { getOriginaltexts, deleteOriginaltext } from "../api/originaltextapi";
 import AddOriginaltext from "./AddOriginaltext";
 import EditOriginaltext from "./EditOriginaltext";
 
@@ -58,7 +60,9 @@ function GetOriginaltextlist() {
       filterable: false,
       disableColumnMenu: true,
       renderCell: (params: GridCellParams) => (
-        <button
+        <IconButton
+          aria-label="delete"
+          size="small"
           onClick={() => {
             if (
               window.confirm(
@@ -69,8 +73,8 @@ function GetOriginaltextlist() {
             }
           }}
         >
-          Delete
-        </button>
+          <DeleteIcon fontSize="small" />
+        </IconButton>
       ),
     },
   ];

@@ -4,6 +4,7 @@ import { addOriginaltext } from "../api/originaltextapi";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
 import type { OriginalText } from "../types/types";
 import OriginaltextDialogContent from "./OriginaltextDialogContent";
 
@@ -59,7 +60,7 @@ function AddOriginaltext() {
   };
   return (
     <>
-      <button onClick={handleClickOpen}>New Original Text</button>
+      <Button onClick={handleClickOpen}>New Original Text</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>New Original Text</DialogTitle>
         <OriginaltextDialogContent
@@ -67,8 +68,8 @@ function AddOriginaltext() {
           handleChange={handleChange}
         />
         <DialogActions>
-          <button onClick={handleClose}>Cancel</button>
-          <button onClick={handleSave}>Save</button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleSave}>Save</Button>
         </DialogActions>
       </Dialog>
     </>

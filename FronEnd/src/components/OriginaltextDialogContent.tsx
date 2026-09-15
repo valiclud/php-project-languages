@@ -1,5 +1,7 @@
 import DialogContent from "@mui/material/DialogContent";
 import type { OriginalText } from "../types/types";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
 type DialogFormProps = {
   originaltext: OriginalText;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
@@ -10,62 +12,56 @@ function OriginaltextDialogContent({
 }: DialogFormProps) {
   return (
     <DialogContent>
-      <input
-        placeholder="Author"
-        name="origtextauthor"
-        value={originaltext.origtextauthor}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Title"
-        name="origtexttitle"
-        value={originaltext.origtexttitle}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Text"
-        name="origtexttext"
-        value={originaltext.origtexttext}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Image"
-        name="origtextimage"
-        value={originaltext.origtextimage}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Century"
-        name="origtextcentury"
-        value={originaltext.origtextcentury}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Place Id"
-        name="idplace"
-        value={originaltext.idplace}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Old Language Id"
-        name="idlanguage"
-        value={originaltext.idlanguage}
-        onChange={handleChange}
-      />
-      <br />
-      <input
-        placeholder="Author Id"
-        name="idauthor"
-        value={originaltext.idauthor}
-        onChange={handleChange}
-      />
-      <br />
+      <Stack spacing={1.5} mt={1}>
+        <TextField
+          label="Author"
+          name="origtextauthor"
+          value={originaltext.origtextauthor}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Title"
+          name="origtexttitle"
+          value={originaltext.origtexttitle}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Text"
+          name="origtexttext"
+          value={originaltext.origtexttext}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Image"
+          name="origtextimage"
+          value={originaltext.origtextimage}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Century"
+          name="origtextcentury"
+          value={originaltext.origtextcentury}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Place Id"
+          name="idplace"
+          value={originaltext.idplace}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Old Language Id"
+          name="idlanguage"
+          value={originaltext.idlanguage}
+          onChange={handleChange}
+        />
+        <TextField
+          label="Author Id"
+          name="idauthor"
+          value={originaltext.idauthor}
+          onChange={handleChange}
+        />
+      </Stack>
     </DialogContent>
   );
 }
