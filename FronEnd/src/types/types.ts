@@ -24,3 +24,14 @@ export type OriginalText = {
   idlanguage: number;
   idauthor:number
 }
+
+export type TranslatedText = {
+  idtranstext?: number;
+  transtexttitle: string;
+  transtexttext: string;
+  transtextlanguage: string;
+  transtextdate?: string;
+  revision: number;
+  idauthor:number;
+  idorigtext: number
+}
