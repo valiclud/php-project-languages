@@ -4,21 +4,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import OriginalTextList from "./components/Originaltextlist";
+import MainRoute from "./routes/MainRoute";
 const queryClient = new QueryClient();
 function App() {
   return (
-    <Container maxWidth="xl">
-      <CssBaseline />
-      <AppBar position="static">
-        <Toolbar>
-          <Typography variant="h6">Old Languages</Typography>
-        </Toolbar>
-      </AppBar>
-      <QueryClientProvider client={queryClient}>
-        <OriginalTextList />
-      </QueryClientProvider>
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container maxWidth="xl">
+        <CssBaseline />
+        <AppBar position="static">
+          <Toolbar>
+            <Typography variant="h6">Old Languages</Typography>
+          </Toolbar>
+        </AppBar>
+        <MainRoute />
+      </Container>
+    </QueryClientProvider>
   );
 }
 export default App;
