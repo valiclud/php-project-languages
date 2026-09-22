@@ -86,7 +86,7 @@ class TranslatedTextApiController extends BaseApiController
 		return null;
 	}
 
-	// curl.exe -X POST http://localhost/originaltextapi/post -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
+	//curl.exe -X POST http://localhost/api/translatedtextapi/post -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"transtexttitle\":\"Unknown\",\"transtexttext\":\"Battle xxxl\",\"transtextlanguage\":\"And so on...\",\"revision\":1,\"idauthor\":1,\"idorigtext\":43}"
 	public function postSubmit()
 	{
 		$post = json_decode(file_get_contents('php://input'), true);
@@ -115,14 +115,14 @@ class TranslatedTextApiController extends BaseApiController
 			'original_text_id' => (int) $post['idorigtext']
 		];
 
-		$id = $this->originalTextTable->save($translatedText);
+		$id = $this->translatedTextTable->save($translatedText);
 		http_response_code(201);
 		$data = array("data" => $id);
 		$responseData = json_encode($data);
 		$this->sendOutput($responseData, array('Content-Type: application/json',  "HTTP/1.1 200 OK", "Access-Control-Allow-Origin: *"));
 	}
 
-	// curl.exe -X PUT http://localhost/api/originaltextapi/update -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"idorigtext\":61,\"origtextauthor\":\"Unknown\",\"origtexttitle\":\"Battle xxxl\",\"origtexttext\":\"And so on...\",\"origtextimage\":\"\",\"origtextcentury\":1,\"idplace\":1,\"idlanguage\":2,\"idauthor\":1}"
+	//curl.exe -X PUT http://localhost/api/translatedtextapi/update -H "Content-Type: application/json" -H "Accept: application/json" -d "{\"idtranstext\":8,\"transtexttitle\":\"Unknown\",\"transtexttext\":\"Battle xxxl\",\"transtextlanguage\":\"And so on...\",\"revision\":1,\"idauthor\":1,\"idorigtext\":43}"
 	public function update($id = null, $array = null)
 	{
 		$inputData = json_decode(file_get_contents("php://input"), true);
@@ -162,15 +162,14 @@ class TranslatedTextApiController extends BaseApiController
 
 		$translatedText = [
 			'id' => (int)$inputData['idtranstext'],
-			'title' => htmlspecialchars($inputdata['transtexttitle'] ?? '', ENT_QUOTES, 'UTF-8'),
-			'text' => htmlspecialchars($inputdata['transtexttext'] ?? '', ENT_QUOTES, 'UTF-8'),
-			'language' => htmlspecialchars($inputdata['transtextlanguage'] ?? '', ENT_QUOTES, 'UTF-8'),
-			'insert_date' => htmlspecialchars($inputdata['transtextdate'] ?? '', ENT_QUOTES, 'UTF-8'),
-			'revision' => (int)($inputdata['revision'] ?? 0),
-			'author_id' => (int)($inputdata['idauthor'] ?? 0),
-			'original_text_id' => (int)($inputdata['idorigtext'] ?? 0)
+			'title' => htmlspecialchars($inputData['transtexttitle'] ?? '', ENT_QUOTES, 'UTF-8'),
+			'text' => htmlspecialchars($inputData['transtexttext'] ?? '', ENT_QUOTES, 'UTF-8'),
+			'language' => htmlspecialchars($inputData['transtextlanguage'] ?? '', ENT_QUOTES, 'UTF-8'),
+			'insert_date' => date_create()->format('Y-m-d'),
+			'revision' => (int)($inputData['revision'] ?? 0),
+			'author_id' => (int)($inputData['idauthor'] ?? 0),
+			'original_text_id' => (int)($inputData['idorigtext'] ?? 0)
 		];
-
 		$this->translatedTextTable->update($translatedText);
 		http_response_code(201);
 		$data = (int)$inputData['idtranstext'];
