@@ -23,7 +23,7 @@ const toNumber = (value: unknown, fallback = 0) => {
 function EditOriginaltext({ originaltextdata }: FormProps) {
   const [open, setOpen] = useState(false);
 
-  const [originaltext, setOriginalText] = useState<OriginalText>({
+  const [originaltext, setOriginaltext] = useState<OriginalText>({
     idorigtext: toNumber(originaltextdata.idorigtext ?? 0),
     origtextauthor: originaltextdata.origtextauthor ?? "",
     origtexttitle: originaltextdata.origtexttitle ?? "",
@@ -37,7 +37,7 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
   });
 
   const handleClickOpen = () => {
-    setOriginalText({
+    setOriginaltext({
       idorigtext: toNumber(originaltextdata.idorigtext ?? 0),
       origtextauthor: originaltextdata.origtextauthor ?? "",
       origtexttitle: originaltextdata.origtexttitle ?? "",
@@ -62,7 +62,7 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setOriginalText((prev) => ({
+    setOriginaltext((prev) => ({
       ...prev,
       [name]: numericFields.has(name) ? Number(value) : value,
     }));
@@ -74,7 +74,7 @@ function EditOriginaltext({ originaltextdata }: FormProps) {
 
   const handleSave = () => {
     mutate(originaltext);
-    setOriginalText({
+    setOriginaltext({
       idorigtext: 0,
       origtextauthor: "",
       origtexttitle: "",

@@ -12,7 +12,7 @@ function OriginaltextDialogContent({
 }: DialogFormProps) {
   return (
     <DialogContent>
-      <Stack spacing={1.5} mt={1}>
+      <Stack spacing={1.5}>
         <TextField
           label="Author"
           name="origtextauthor"
